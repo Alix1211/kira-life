@@ -4798,5 +4798,21 @@ coreAutoSave=function(){ if(r18Loading)return; r18AutoBase(); };
   },100);
 })();
 
+/* ==== R19: 버튼은 서 있는 자리에 맞는 것만 (침대=휴식·잠자기, 문=밖으로) ==== */
+const r19DoorBase=setDoorButton;
+setDoorButton=function(){
+  r19DoorBase();
+  if(!ready||!activeRoom||activeField||roomButton.hidden)return;
+  try{
+    if(Math.hypot(player.x,player.z-activeRoom.d/2)>2.0){roomButton.hidden=true;return;}
+    if(lifeNearby())roomButton.hidden=true; // 대화·제작 등 할 일이 있으면 그 버튼이 우선 (같은 자리에 겹치지 않게)
+  }catch(e){}
+};
+const r19RenderBase=coreRender;
+coreRender=function(force){
+  r19RenderBase(force);
+  try{ $('kira-rest').hidden=!coreAtBed(); }catch(e){}
+};
+
 main().catch(error=>{status.textContent='마을을 불러오지 못했습니다.';console.error(error);});
 </script></body></html>
