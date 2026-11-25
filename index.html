@@ -4774,5 +4774,29 @@ setDoorButton=function(){
  try{const t=lifeNearby();if(t&&(t.type==='npc'||t.type==='story'))roomButton.hidden=true;}catch(e){}
 };
 
+/* ==== R18: 시작 시 가장 최근 저장을 자동으로 이어 받기 ==== */
+let r18Loading=true;
+const r18AutoBase=coreAutoSave;
+coreAutoSave=function(){ if(r18Loading)return; r18AutoBase(); };
+(function r18Boot(){
+  try{ if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{}); }catch(e){}
+  let tries=0;
+  const wait=setInterval(async()=>{
+    if(!ready){ if(++tries>1800){clearInterval(wait);r18Loading=false;} return; }
+    clearInterval(wait);
+    try{
+      const all=await coreReadAll();
+      let best=null;
+      for(const id of ['m1','m2','m3','a1','a2','a3']){
+        const p=all[id]; if(!p||!p.savedAt)continue;
+        try{ coreValidate(p); }catch(e){ continue; }
+        if(!best||String(p.savedAt)>String(best.savedAt))best=p;
+      }
+      if(best){ await coreRestore(best); coreToast('이어서 시작합니다.'); }
+    }catch(e){ console.error('자동 이어하기 실패',e); }
+    finally{ r18Loading=false; coreAuto=0; }
+  },100);
+})();
+
 main().catch(error=>{status.textContent='마을을 불러오지 못했습니다.';console.error(error);});
 </script></body></html>
