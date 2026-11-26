@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>공방주 키라의 라이프 · 생활 필드 R12</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>공방주 키라의 라이프 · R20</title>
 <style>
 /* R12 — all interface artwork is code. No raster UI frames or icons. */
 :root{color-scheme:dark;--ink:#f6f0df;--muted:#b7c4b8;--panel:#172c2beF;--line:#9eb9a448;--gold:#edcf91;--green:#9cceb2;--danger:#df9a87;font-family:"Malgun Gothic",system-ui,sans-serif}
@@ -361,9 +361,9 @@ THE SOFTWARE.
 
 KayKit Adventurers and Character Animations by Kay Lousberg, CC0. KayKit Dungeon, Skeletons, Forest Nature and Resource Bits by Kay Lousberg, CC0. Fantasy Props MegaKit and Ultimate Monsters by Quaternius, CC0.
 -->
-</head><body><div id="world"></div><div id="passage" aria-hidden="true"></div><h1 id="district">키라의 마을</h1><section id="kira-hud" hidden aria-label="키라 상태"><div class="kira-name">Kira <b id="kira-level">Lv. 1</b></div><div class="kira-bar"><span>HP</span><progress id="kira-hp" max="100" value="100"></progress><output id="kira-hp-num"></output></div><div class="kira-bar"><span>MP</span><progress id="kira-mp" max="42" value="42"></progress><output id="kira-mp-num"></output></div><div class="kira-bar"><span>STA</span><progress id="kira-st" max="90" value="90"></progress><output id="kira-st-num"></output></div><progress class="kira-xp-line" id="kira-xp" max="72" value="0" aria-label="경험치"></progress><span id="kira-fatigue"></span></section><section id="kira-clock" hidden><div id="kira-date"></div><div id="kira-time"></div><div id="kira-gold"></div><button id="life-bag">가방</button><button id="life-journal">의뢰</button><button id="kira-menu">상태 · 저장</button><div id="nav-box"><canvas id="nav-map" width="240" height="240" aria-label="미니맵"></canvas><span id="nav-label"></span></div></section><div id="kira-actions"><button id="kira-sleep" hidden>취침</button><button id="kira-rest" hidden>휴식</button></div><div id="kira-panel" hidden role="dialog" aria-label="키라 상태 및 저장" aria-modal="true"><div class="kira-window"><header><strong>Kira</strong><button id="kira-close" aria-label="닫기">닫기</button></header><nav><button id="kira-tab-status" aria-selected="true">상태</button><button id="kira-tab-save" aria-selected="false">저장</button></nav><section id="kira-status-pane"><div id="kira-stat-grid"></div><h2>숙련도</h2><div id="kira-skill-grid"></div></section><section id="kira-save-pane" hidden><div id="kira-slot-list"></div><div class="kira-backup"><button id="kira-export">파일로 저장</button><button id="kira-import">파일 불러오기</button><input id="kira-file" type="file" accept=".json,application/json" hidden></div></section></div></div><output id="kira-toast" role="status"></output><div id="life-task" hidden></div><button id="life-action" hidden></button><div id="life-window" role="dialog" aria-modal="true" hidden><div class="life-shell"><header><strong id="life-title"></strong><button id="life-close">닫기</button></header><div id="life-content"></div></div></div>
+<link rel="stylesheet" href="simple-ui.css"></head><body><div id="world"></div><div id="passage" aria-hidden="true"></div><h1 id="district">키라의 공방</h1><section id="kira-hud" hidden aria-label="키라 상태"><div class="kira-name">Kira <b id="kira-level">Lv. 1</b></div><div class="kira-bar"><span>HP</span><progress id="kira-hp" max="100" value="100"></progress><output id="kira-hp-num"></output></div><div class="kira-bar"><span>MP</span><progress id="kira-mp" max="42" value="42"></progress><output id="kira-mp-num"></output></div><div class="kira-bar"><span>STA</span><progress id="kira-st" max="90" value="90"></progress><output id="kira-st-num"></output></div><progress class="kira-xp-line" id="kira-xp" max="72" value="0" aria-label="경험치"></progress><span id="kira-fatigue"></span></section><section id="kira-clock" hidden><div id="kira-date"></div><div id="kira-time"></div><div id="kira-gold"></div><button id="life-bag">가방</button><button id="life-journal">의뢰</button><button id="kira-menu">상태 · 저장</button><div id="nav-box"><canvas id="nav-map" width="240" height="240" aria-label="미니맵"></canvas><span id="nav-label"></span></div></section><div id="kira-actions"><button id="kira-sleep" hidden>취침</button><button id="kira-rest" hidden>휴식</button></div><div id="kira-panel" hidden role="dialog" aria-label="키라 상태 및 저장" aria-modal="true"><div class="kira-window"><header><strong>Kira</strong><button id="kira-close" aria-label="닫기">닫기</button></header><nav><button id="kira-tab-status" aria-selected="true">상태</button><button id="kira-tab-save" aria-selected="false">저장</button></nav><section id="kira-status-pane"><div id="kira-stat-grid"></div><h2>숙련도</h2><div id="kira-skill-grid"></div></section><section id="kira-save-pane" hidden><div id="kira-slot-list"></div><div class="kira-backup"><button id="kira-export">파일로 저장</button><button id="kira-import">파일 불러오기</button><input id="kira-file" type="file" accept=".json,application/json" hidden></div></section></div></div><output id="kira-toast" role="status"></output><div id="life-task" hidden></div><button id="life-action" hidden></button><div id="life-window" role="dialog" aria-modal="true" hidden><div class="life-shell"><header><strong id="life-title"></strong><button id="life-close">닫기</button></header><div id="life-content"></div></div></div>
 <div id="stick" role="group" aria-label="이동 조이스틱"><span id="knob"></span></div><button id="full" aria-label="전체화면">⛶</button>
-<div id="combat-ui" hidden><progress id="health" aria-label="키라 체력" max="100" value="100"></progress><button id="shortway" hidden>지름길 열기</button><button id="dodge">회피</button><button id="strike">공격</button></div><button id="room-action" hidden></button><output id="room-state" role="status"></output><output id="status" role="status">마을을 불러오는 중</output><script id="asset-ore-copper" type="application/octet-stream" data-n="003"></script><script id="asset-ore-iron" type="application/octet-stream" data-n="004"></script><script id="asset-ore-silver" type="application/octet-stream" data-n="005"></script><script id="asset-ore-stone" type="application/octet-stream" data-n="006"></script><script id="asset-res-log" type="application/octet-stream" data-n="007"></script><script id="asset-res-copperbar" type="application/octet-stream" data-n="008"></script><script id="asset-res-ironbar" type="application/octet-stream" data-n="009"></script><script id="asset-res-silverbar" type="application/octet-stream" data-n="010"></script><script id="asset-tool-axe" type="application/octet-stream" data-n="011"></script><script id="asset-tool-pick" type="application/octet-stream" data-n="012"></script><script id="asset-tool-shovel" type="application/octet-stream" data-n="013"></script><script id="asset-life-tools" type="application/octet-stream" data-n="014"></script><script id="asset-Ranger" type="application/octet-stream" data-n="015"></script>
+<div id="combat-ui" hidden><progress id="health" aria-label="키라 체력" max="100" value="100"></progress><button id="shortway" hidden>지름길 열기</button><button id="dodge">회피</button><button id="strike">공격</button></div><button id="room-action" hidden></button><output id="room-state" role="status"></output><output id="status" role="status">공방을 불러오는 중</output><script id="asset-ore-copper" type="application/octet-stream" data-n="003"></script><script id="asset-ore-iron" type="application/octet-stream" data-n="004"></script><script id="asset-ore-silver" type="application/octet-stream" data-n="005"></script><script id="asset-ore-stone" type="application/octet-stream" data-n="006"></script><script id="asset-res-log" type="application/octet-stream" data-n="007"></script><script id="asset-res-copperbar" type="application/octet-stream" data-n="008"></script><script id="asset-res-ironbar" type="application/octet-stream" data-n="009"></script><script id="asset-res-silverbar" type="application/octet-stream" data-n="010"></script><script id="asset-tool-axe" type="application/octet-stream" data-n="011"></script><script id="asset-tool-pick" type="application/octet-stream" data-n="012"></script><script id="asset-tool-shovel" type="application/octet-stream" data-n="013"></script><script id="asset-life-tools" type="application/octet-stream" data-n="014"></script><script id="asset-Ranger" type="application/octet-stream" data-n="015"></script>
 <script id="asset-Mage" type="application/octet-stream" data-n="016"></script>
 <script id="asset-Knight" type="application/octet-stream" data-n="017"></script>
 <script id="asset-Barbarian" type="application/octet-stream" data-n="018"></script>
@@ -1555,20 +1555,10 @@ function draw(){
  renderer.render(scene,camera);navDraw(dt);
 }
 async function main(){
- ground();
- await buildingsAndStreets();
- flowerCount=await marketAndFurnishings();
- await growTrees();
- putVillageForestExit();
- await putVillageDungeonExit();
- putVillageMineExit();
- putVillageWatersideExits();
+ r20RegisterRooms();
  const [idleAsset,moveAsset]=await Promise.all([load('general'),load('move')]);
  clips={idle:idleAsset.animations.find(x=>x.name==='Idle_A'),walk:moveAsset.animations.find(x=>x.name==='Walking_A')};
- await sculpture(clips.idle);
- navigation=makeNavigation();destinations=walkableLandmarks();
- if(destinations.length<15)throw Error('Too few reachable destinations');
- resolveNewDoors();
+ navigation=new Map();destinations=Array.from({length:21},()=>({x:0,z:0}));
  const who=await character(profiles[0]);
  shoulders=['upperarml','upperarmr'].map(n=>who.skin.getObjectByName(n));
  playerRig=makeActor(player,who,clips);actors.add(playerRig.group);display(playerRig);
@@ -1579,6 +1569,7 @@ async function main(){
   unit.current.time=(i*.31)%clips.idle.duration;
   actors.add(unit.group);display(unit);npc.push(unit);
  }
+ await corePlace({id:'workshop',x:0,z:3.8,heading:Math.PI});
  status.textContent='';document.body.dataset.ready='yes';ready=true;hud.hidden=false;$('kira-clock').hidden=false;life();coreRender(true);lifeFieldVisit();
  renderer.setAnimationLoop(draw);
 }
@@ -2400,19 +2391,13 @@ function ruinAttack(aim=null){
  const f=ruinActive();if(!f||transitionTimer||coreModal||coreBusy||lifeAnimation||ruinCombat.hp<=0)return;
  if(ruinCombat.move){if(ruinCombat.move.kind==='strike'&&ruinCombat.move.total-ruinCombat.move.elapsed<=.25)ruinCombat.queued=true;return;}
  const live=f.enemies.filter(e=>e.hp>0&&direct(player,e,.08,f)).sort((a,b)=>distanceFromHero(a)-distanceFromHero(b));
- const enemy=aim&&live.includes(aim)?aim:live.find(e=>distanceFromHero(e)<=2.65);
- if(enemy&&distanceFromHero(enemy)>1.58){
-  const d=distanceFromHero(enemy),point={x:enemy.x+(player.x-enemy.x)*1.24/d,z:enemy.z+(player.z-enemy.z)*1.24/d};
-  const steps=route(player,point,f);
-  if(steps.length){player.steps=steps;ruinCombat.target=enemy;return;}
-  if(aim)return;
- }
+ const enemy=aim&&live.includes(aim)&&distanceFromHero(aim)<4.2?aim:live.find(e=>distanceFromHero(e)<=4.2);
  ruinCombat.target=null;player.steps=[];
  if(enemy)player.heading=Math.atan2(enemy.x-player.x,enemy.z-player.z);
  const chain=ruinCombat.chainTime>0?ruinCombat.chain:0;
  const clip=heroClips['cut'+chain];
- const total=[.38,.42,.62][chain],contact=[.20,.23,.30][chain];
- ruinCombat.move={kind:'strike',elapsed:0,contact,total,chain,damage:[1,1.05,1.35][chain]};
+ const total=[.28,.30,.42][chain],contact=[.12,.14,.20][chain];
+ ruinCombat.move={kind:'strike',elapsed:0,contact,total,chain,damage:[1,1.15,1.6][chain]};
  animateOnce(playerRig,clip);playerRig.current.setEffectiveTimeScale(clip.duration/total);ruinCombat.chain=(chain+1)%3;ruinCombat.chainTime=total+.70;
 }
 function distanceFromHero(e){return Math.hypot(e.x-player.x,e.z-player.z);}
@@ -2484,8 +2469,8 @@ function ruinEnemyTurn(f,e,dt,attackSlots){
   return;
  }
  e.nextHit-=dt;
- const inRoom=Math.hypot(player.x-e.home.x,player.z-e.home.z)<8.3;
- if(!inRoom&&d>13.5)return;
+ const inRoom=d<30;
+ if(!inRoom)return;
  const target=inRoom&&ruinCombat.hp>0?player:e.home;
  const dx=target.x-e.x,dz=target.z-e.z,len=Math.hypot(dx,dz);
  const reach=e.kind==='thorn'?2.37:e.type.range*.92;
@@ -2520,12 +2505,14 @@ function stepRuin(dt){
   const old=a.elapsed;a.elapsed+=dt;
   if(a.kind==='roll')slide(player,Math.sin(player.heading)*5.35*dt,Math.cos(player.heading)*5.35*dt,.26,f);if(a.kind==='magic'&&old<a.contact&&a.elapsed>=a.contact)battleRelease(a);
   if(a.kind==='strike'&&old<a.contact&&a.elapsed>=a.contact){
+   r20Slash(a);
    const hits=f.enemies.filter(e=>{
     const dx=e.x-player.x,dz=e.z-player.z,d=Math.hypot(dx,dz);
     const dot=(Math.sin(player.heading)*dx+Math.cos(player.heading)*dz)/Math.max(.01,d);
-    return e.hp>0&&d<=1.6&&(dot>=.6428||d<.26)&&direct(player,e,.06,f);
-   }).sort((e,b)=>distanceFromHero(e)-distanceFromHero(b)).slice(0,2);
+    return e.hp>0&&d<=(a.chain===2||a.heavy?4.2:3.3)&&(dot>=(a.chain===2?-.4:-.1)||d<.6)&&direct(player,e,.06,f);
+   }).sort((e,b)=>distanceFromHero(e)-distanceFromHero(b));
    let power=a.damage;if(hits.length&&a.heavy&&battleDevice('P62')){power=2;life().quest.deviceHit=true;}for(const e of hits){battleDamage(e,ruinDamage(e,power),'sword');battleFlash(e.x,e.z,1,'#ffe1a4',.15,.35);}
+   r20SwordMagic(a,hits);
   }
   playerRig.mixer.update(dt);
   if(a.elapsed>=a.total){
@@ -2534,7 +2521,7 @@ function stepRuin(dt){
    if(ruinCombat.queued){ruinCombat.queued=false;ruinAttack();}
   }
  }else if(ruinCombat.target&&!player.steps.length){const e=ruinCombat.target;ruinCombat.target=null;if(e.hp>0&&distanceFromHero(e)<=2.4)ruinAttack(e);}
- let slots=2-f.enemies.filter(e=>e.mode==='strike').length;
+ let slots=5-f.enemies.filter(e=>e.mode==='strike').length;
  for(const e of f.enemies){const old=e.mode;ruinEnemyTurn(f,e,dt,slots);if(old!=='strike'&&e.mode==='strike')slots--;}
  return !!a||!!ruinCombat.move;
 }
@@ -3466,7 +3453,7 @@ function coreAtBed(){return activeRoom?.id==='workshop'&&Math.hypot(player.x-1.6
 function coreRender(force=false){if(!ready&&!force)return;const m=coreStats(),d=coreDate();$('kira-level').textContent='Lv. '+core.level;$('kira-date').textContent=d.text;$('kira-time').textContent=d.time;$('kira-gold').textContent=core.gold.toLocaleString('ko-KR')+' G';for(const k of ['hp','mp','st']){const p=$('kira-'+k);p.max=m[k];p.value=core[k];$('kira-'+k+'-num').textContent=`${Math.floor(core[k])} / ${m[k]}`;}const xp=$('kira-xp');xp.max=core.level===90?1:xpNext(core.level);xp.value=core.level===90?1:core.xp;$('kira-fatigue').textContent=`피로 ${Math.floor(core.fatigue)} / ${m.st}`;$('kira-sleep').hidden=!coreAtBed();$('kira-rest').hidden=activeRoom?.id!=='workshop';$('kira-rest').disabled=core.rest>=2;$('kira-menu').disabled=!!transitionTimer||coreBusy||coreCombat();if(coreModal&&$('kira-status-pane').hidden===false)coreRenderStats();}
 function coreRenderStats(){const m=coreStats();$('kira-stat-grid').innerHTML=[['레벨',core.level],['경험치',core.level===90?'MAX':`${core.xp} / ${xpNext(core.level)}`],['공격력',m.atk],['마법력',m.magic],['방어력',m.def],['피로',`${core.fatigue} / ${m.st}`]].map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join('');$('kira-skill-grid').innerHTML=SKILLS.map((k,i)=>`<div><span>${SKILL_LABELS[i]}</span><b>${core.skills[k].level}</b><progress max="${core.skills[k].level===100?1:18+2*core.skills[k].level}" value="${core.skills[k].level===100?1:core.skills[k].xp}"></progress></div>`).join('');}
 function coreStop(){player.steps=[];pendingDoor=null;pressKeys.clear();stick.set(0,0);knob.style.transform='';}
-function coreSnapshot(){battleSave();const f=fields.get('dungeon');if(f)core.world.dungeon={enemies:f.enemies.map(e=>Math.max(0,e.hp)),shortcut:!!f.shortcut.open};return {game:KIRA_GAME,schema:KIRA_SCHEMA,savedAt:new Date().toISOString(),state:structuredClone(core),location:{id:activeRoom?.id??activeField?.id??'village',x:player.x,z:player.z,heading:player.heading}};}
+function coreSnapshot(){battleSave();const f=fields.get('dungeon');if(f)core.world.dungeon={enemies:f.enemies.slice(0,12).map(e=>Math.max(0,e.hp)),shortcut:!!f.shortcut.open};return {game:KIRA_GAME,schema:KIRA_SCHEMA,savedAt:new Date().toISOString(),state:structuredClone(core),location:{id:activeRoom?.id??activeField?.id??'village',x:player.x,z:player.z,heading:player.heading}};}
 function coreValidate(p){if(p?.state){validateLife(p.state);battleValidate(p.state);}const fail=()=>{throw Error('저장 파일 형식이 올바르지 않습니다.');};if(!p||p.game!==KIRA_GAME||p.schema!==KIRA_SCHEMA||!p.state||!p.location)fail();const s=p.state,l=p.location,valid=(x,a,b,int=false)=>Number.isFinite(x)&&x>=a&&x<=b&&(!int||Number.isInteger(x));if(!valid(s.day,1,1000000,true)||!valid(s.minute,360,1560)||!valid(s.level,1,90,true)||!valid(s.xp,0,s.level===90?0:xpNext(s.level)-1,true)||!valid(s.gold,0,1e12,true)||!valid(s.rest,0,2,true)||!valid(s.food,0,2,true)||!valid(s.mpMinutes,0,30)||!valid(s.seq,0,1e12,true)||!s.skills||!s.world)fail();for(const k of SKILLS){const v=s.skills[k];if(!v||!valid(v.level,0,100,true)||!valid(v.xp,0,v.level===100?0:17+2*v.level,true))fail();}const m=coreStats(s);for(const k of ['hp','mp','st'])if(!valid(s[k],k==='hp'?1:0,m[k]))fail();if(!valid(s.fatigue,0,m.st)||!Array.isArray(s.inventory)||!Array.isArray(s.storage)||!Array.isArray(s.visited)||!s.equipment||!s.flags)fail();if(!['village',...Object.keys(portalSpecs),...Object.keys(trailLinks)].includes(l.id)||!valid(l.x,-200,200)||!valid(l.z,-200,200)||!valid(l.heading,-10000,10000))fail();const d=s.world.dungeon;if(d!==null&&(!d||!Array.isArray(d.enemies)||d.enemies.length!==12||d.enemies.some((hp,i)=>!valid(hp,0,ruinKinds[ruinEncounter.flat()[i][0]].hp))||typeof d.shortcut!=='boolean'))fail();return p;}
 function coreApplyRuin(f,data=core.world.dungeon){if(!f||f.id!=='dungeon')return;for(const [i,e] of f.enemies.entries()){e.hp=data?.enemies[i]??e.type.hp;e.mode=e.hp?'free':'dead';e.clock=0;e.nextHit=.45;e.warning.visible=false;e.group.visible=e.hp>0;e.steps=[];e.x=e.home.x;e.z=e.home.z;e.heading=0;animateActor(e,false,0);display(e);}const gate=f.shortcut,open=!!data?.shortcut;if(gate.open!==open){gate.open=open;gate.model.visible=!open;if(open){const i=f.blockers.indexOf(gate);if(i>=0)f.blockers.splice(i,1);}else if(!f.blockers.includes(gate))f.blockers.push(gate);f.navigation=makeNavigation(f);}}
 async function corePlace(loc){const room=portals.get(loc.id),next=room||loc.id==='village'?null:await getField(loc.id).then(lifePrepareField);if(room)await getInterior(room);const area=room??next;let {x,z,heading}=loc;if(blocked(x,z,.26,area)){throw Error('저장 위치가 현재 지도와 일치하지 않습니다.');}const from=activeField?.id??'village';if(activeRoom)activeRoom.group.visible=false;if(activeField)activeField.group.visible=false;activeRoom=room??null;activeField=next;interiorRoot.visible=!!room;scenery.visible=!room&&!next;if(room)room.group.visible=true;if(next)next.group.visible=true;for(const n of npc){n.group.visible=!room&&!next;if(n.group.visible)display(n);}if(room?.staff){const n=npc[room.staff-1];n.group.position.set(room.staffSpot[0],0,room.staffSpot[1]);n.group.rotation.y=.07;n.group.visible=true;}scene.background=room?new T.Color(room.id==='pub'?'#4c3a31':'#484449'):next?new T.Color(next.plan.sky):exteriorSky;scene.fog=room?null:next?new T.Fog(next.plan.sky,...next.plan.fog):insideFog;Object.assign(player,{x,z,heading});Object.assign(playerRig,{x,z,heading});display(playerRig);follow.set(x,areaHeight(x,z),z);ruinEntry(from,next?.id??'village');if(room)coreRoomLighting();else coreLighting();refreshUndergroundLighting(next,x,z,0,true);districtText='';if(room)$('district').textContent=room.label;else district();setDoorButton();}
@@ -3512,7 +3499,7 @@ const R13={
   skillOf:i=>(i.cat==='중간재'||['무기','몸 방어구','머리 방어구','발 방어구','도구','생활품'].includes(i.cat))?'craft':'alchemy'
 };
 const r13Gate=(g,lv)=>lifeGate(g)||R13.alc()>=lv;   // 스토리로도, 숙련으로도 열리는 기능
-function recipeAllowed(i,s=core){const l=life(s);if(!i.inp)return false;const trial={2:['P01','P02','P03','P04','P05','P06','P07'],3:['P08'],4:['P09'],5:['P09'],6:['P09'],10:['P22'],17:['P55','P56'],20:['P59'],22:['P62'],24:['P63'],26:['P79'],43:['P116'],44:['P116']};const scene=!!trial[l.main]?.includes(i.id);return !!l.learned[i.id]||((s.skills.alchemy.level>=R13.tierSkill[i.t-1]||scene)&&(!/^P\d+$/.test(i.teacher)||!!l.crafted[i.teacher]||scene));}
+function recipeAllowed(i,s=core){const l=life(s);if(!i.inp)return false;const trial={2:['P01','P02','P03','P04','P05','P06','P07'],3:['P08'],4:['P09'],5:['P09'],6:['P09'],10:['P22'],17:['P55','P56'],20:['P59'],22:['P62'],24:['P63'],26:['P79'],43:['P116'],44:['P116']};const scene=!!trial[l.main]?.includes(i.id);return !!l.learned[i.id]||(((s.skills[R13.skillOf(i)]??s.skills.alchemy).level>=R13.tierSkill[i.t-1]||scene)&&(!/^P\d+$/.test(i.teacher)||!!l.crafted[i.teacher]||scene));}
 const stackCap=i=>slotOf(i)||i.cat==='코어'?1:i.id.startsWith('A')?50:20;
 const bagCap=s=>[24,36,48,48][life(s).workshop-1];let chestCap=s=>[96,160,240,240][life(s).workshop-1];
 const countItem=(bag,id,min=0,kind=null)=>bag.reduce((a,x)=>a+(x.id===id&&x.q>=min&&(!kind||x.seedKind===kind)?x.n:0),0);
@@ -3653,7 +3640,7 @@ function lifeAnimate(dt){const a=lifeAnimation;if(!a)return;playerRig.mixer.upda
 const lifeInteractOriginal=lifeInteract;
 lifeInteract=function(o){if(!o||lifeAnimation||coreBusy||coreModal||transitionTimer)return;if(o.type==='node'){const n=o.node;if(!n.mesh.visible)return;if(n.skill==='mine'&&!life().tools.pickaxe&&!core.equipment.pickaxe){coreToast('곡괭이가 필요합니다.');return;}if(!lifeCost({mine:7,wood:6,gather:3}[n.skill])){coreToast('피로가 쌓였습니다.');return;}const c=n.skill==='mine'?['Pickaxe','tool-pick']:n.skill==='wood'?['Chop','tool-axe']:['Work_A',null];lifeStartMotion(c[0],c[1],1.6,n,()=>{if(lifeGather(n)){n.mesh.visible=false;coreToast(ITEM_DATA[n.id].name+' 획득');}else coreToast('가방 또는 채집 조건을 확인해 주세요.');});return;}lifeInteractOriginal(o);};
 lifeHunt=function(o){const a=o.animal,l=life(),key='hunt:'+o.n;if(!a.group.visible||(l.nodes[key]??0)>core.day||Math.hypot(a.x-player.x,a.z-player.z)>2.1)return;lifeStartMotion('Melee_1H_Attack_Slice_Horizontal','prop-sword',.6,a,()=>{if(!a.group.visible)return;l.flags.huntHp??={};const hp=(l.flags.huntHp[key]??35)-Math.max(1,Math.round((coreStats().atk+(core.equipment.weapon?0:3))*100/104));l.flags.huntHp[key]=hp;if(hp>0){const f=activeField,dx=a.x-player.x,dz=a.z-player.z,len=Math.hypot(dx,dz)||1;const dest={x:a.x+dx/len*5,z:a.z+dz/len*5};a.steps=route(a,dest,f);a.pause=0;return;}const bag=cloneBag(core.inventory);for(const id of ['A19','A20','A21'])if(!addStack(bag,id,1,itemQuality(id,key,'hunt'),bagCap(core))){l.flags.recovery??=[];l.flags.recovery.push({id,n:1,q:45});}core.inventory=bag;l.nodes[key]=core.day+1;delete l.flags.huntHp[key];a.group.visible=false;coreGain(6,'hunt',9);coreToast('수렵 완료');});};
-function lifeDailyReset(){battleDaily();const f=fields.get('dungeon');if(f){const shortcut=f.shortcut.open;core.world.dungeon={enemies:f.enemies.map(e=>e.type.hp),shortcut};coreApplyRuin(f);}else if(core.world.dungeon){core.world.dungeon.enemies=ruinEncounter.flat().map(x=>ruinKinds[x[0]].hp);}life().flags.huntHp={};for(const [k,a] of (fields.get('hunt')?.animals??[]).entries())a.group.visible=(life().nodes['hunt:'+k]??0)<=core.day;for(const f of fields.values())lifeRefreshField(f);}
+function lifeDailyReset(){battleDaily();const f=fields.get('dungeon');if(f){const shortcut=f.shortcut.open;core.world.dungeon={enemies:f.enemies.slice(0,12).map(e=>e.type.hp),shortcut};coreApplyRuin(f);}else if(core.world.dungeon){core.world.dungeon.enemies=ruinEncounter.flat().map(x=>ruinKinds[x[0]].hp);}life().flags.huntHp={};for(const [k,a] of (fields.get('hunt')?.animals??[]).entries())a.group.visible=(life().nodes['hunt:'+k]??0)<=core.day;for(const f of fields.values())lifeRefreshField(f);}
 const originalLifeRefresh=lifeRefreshField;
 lifeRefreshField=function(f=activeField){originalLifeRefresh(f);if(f?.id==='hunt')for(const [k,a] of f.animals.entries())a.group.visible=(life().nodes['hunt:'+k]??0)<=core.day;};
 const originalStoryPoint=lifeStoryPoint;lifeStoryPoint=function(m,id){if(!activeField)return null;activeField.lifeStoryPoints??={};if(!(m in activeField.lifeStoryPoints))activeField.lifeStoryPoints[m]=originalStoryPoint(m,id);return activeField.lifeStoryPoints[m];};
@@ -3704,7 +3691,7 @@ function battleDaily(){const b=battleState();for(const [id,r] of Object.entries(
 async function battleInitClips(){if(battleInit)return battleInit;battleInit=(async()=>{const [m,r,a,g,v,sword]=await Promise.all([load('d-melee'),load('combat-ranged'),load('d-dodge'),load('general'),load('move'),model('prop-sword')]);battleClips=Object.fromEntries([...m.animations,...r.animations,...a.animations,...g.animations,...v.animations].map(c=>[c.name,c]));const c=battleClips;heroClips??={cut0:c.Melee_1H_Attack_Slice_Diagonal,cut1:c.Melee_1H_Attack_Slice_Horizontal,cut2:c.Melee_1H_Attack_Chop,roll:c.Dodge_Forward,fall:c.Death_A,hit:c.Hit_A};if(!ruinSword){const weapon=sword.clone(true),d=dimensions(weapon);weapon.scale.setScalar(.93/d.size.length());weapon.position.set(0,-.012,0);const hand=playerRig.skin.getObjectByName('handslotr')??playerRig.skin.getObjectByName('handr');ruinSword=new T.Group();ruinSword.rotation.set(Math.PI/2,0,Math.PI/2);ruinSword.visible=false;ruinSword.add(weapon);hand.add(ruinSword);}return c;})().catch(e=>{battleInit=null;throw e;});return battleInit;}
 function battlePoints(f){const room=deepById.get(f.id)?.rooms??[];const used=[];const points=[...f.navigation.values()].filter(p=>!blocked(p.x,p.z,.42,f)&&!(trailLinks[f.id]??[]).some(l=>Math.hypot(p.x-l.x,p.z-l.z)<5));const spaces=room.filter(([a,b,c,d])=>b-a>=3&&d-c>=3).slice(1);for(const [a,b,c,d] of spaces){const cx=a+b,cz=c+d;for(const dx of [-1.65,1.65]){const p=points.filter(p=>!used.some(u=>Math.hypot(u.x-p.x,u.z-p.z)<2.5)).sort((p,q)=>Math.hypot(p.x-cx-dx,p.z-cz)-Math.hypot(q.x-cx-dx,q.z-cz))[0];if(p)used.push(p);}}return used.slice(0,12);}
 async function battleActor(cid,p,f,key){const d=BATTLE_DATA[cid],m=await load(battleModel[cid]),skin=m.scene,c=battleClips,isBone=battleSkeleton.has(cid),list=Object.fromEntries(m.animations.map(a=>[a.name,a]));const get=(...names)=>names.map(n=>list[n]).find(Boolean)??m.animations[0];const motions=isBone?{idle:c.Idle_A,walk:c.Walking_A,strike:cid==='C06'?c.Ranged_Magic_Shoot:c.Melee_1H_Attack_Slice_Horizontal,fall:c.Death_A,hit:c.Hit_A}:{idle:get('Idle','Flying_Idle'),walk:get('Walk','Fast_Flying','Run'),strike:get('Bite_Front','Punch','Headbutt'),fall:get('Death'),hit:get('HitReact','HitRecieve')};const large=d.rank==='boss',size=large?2.35:isBone?1.44:d.model.startsWith('Big')?1.64:1.23;const g=new T.Group(),a=dimensions(skin);g.add(skin);g.scale.setScalar(size/Math.max(.01,a.size.y));skin.position.sub(new T.Vector3(a.center.x,a.box.min.y,a.center.z));const range=['C06','C08','C18'].includes(cid)?4.5:large?2.5:1.8;const e=makeActor({cid,key,kind:range>4?'mushroom':'normal',type:{...d,def:d.df,size,range,wind:large?1.05:.78,speed:large?1.5:2.1},hp:d.hp,x:p.x,z:p.z,home:{x:p.x,z:p.z},heading:0,steps:[],speed:large?1.5:2.1,nextHit:.65,mode:'free',clock:0},{group:g,skin},motions);e.motions=motions;if(isBone){const hand=skin.getObjectByName('handslotr')??skin.getObjectByName('handr');if(hand){const w=(await model('prop-sword')).clone(true),q=dimensions(w);w.scale.setScalar(.8/q.size.length());w.rotation.set(Math.PI/2,0,Math.PI/2);hand.add(w);}}const warn=new T.Mesh(new T.RingGeometry(.87,1,38),new T.MeshBasicMaterial({color:'#f69759',side:T.DoubleSide,transparent:true,opacity:.64,depthWrite:false}));warn.rotation.x=-Math.PI/2;warn.visible=false;e.warning=warn;g.name=d.name;f.group.add(g,warn);display(e);return e;}
-async function battlePrepare(f){if(!f||f.battleReady)return;if(f.id==='dungeon'){await battleInitClips();for(const [i,e] of f.enemies.entries()){e.cid=battleOld[e.kind];e.key=String(i);}f.battleReady=true;battleRestoreField(f);return;}const ids=battleFloors[f.id];if(!ids){f.battleReady=true;return;}if(f.battlePreparing)return f.battlePreparing;f.battlePreparing=(async()=>{await battleInitClips();const pts=battlePoints(f),normal=ids.filter(id=>BATTLE_DATA[id].rank==='normal'),boss=ids.find(id=>BATTLE_DATA[id].rank==='boss');const count=Math.min(pts.length-(boss?1:0),12),enemies=[];let ki=0;for(let i=0;i<count&&enemies.length<30;i++){const size=2+Math.floor(lifeHash(f.id+':pk'+i)*3);for(let j=0;j<size&&enemies.length<30;j++){const ang=j/size*6.283+lifeHash(f.id+i)*6,off=j?1.15:0;let q={x:pts[i].x+Math.cos(ang)*off,z:pts[i].z+Math.sin(ang)*off};if(blocked(q.x,q.z,.42,f))q={x:pts[i].x,z:pts[i].z};enemies.push(await battleActor(normal[(i+j)%normal.length],q,f,String(ki++)));}}if(boss&&pts.length>count)enemies.push(await battleActor(boss,pts.at(-1),f,'boss'));f.enemies=enemies;f.battleReady=true;battleRestoreField(f);})().catch(e=>{f.battlePreparing=null;throw e;});return f.battlePreparing;}
+async function battlePrepare(f){if(!f||f.battleReady)return;if(f.id==='dungeon'){await battleInitClips();for(const [i,e] of f.enemies.entries()){e.cid=battleOld[e.kind];e.key=String(i);}f.battleReady=true;battleRestoreField(f);return;}const ids=battleFloors[f.id];if(!ids){f.battleReady=true;return;}if(f.battlePreparing)return f.battlePreparing;f.battlePreparing=(async()=>{await battleInitClips();const pts=battlePoints(f),normal=ids.filter(id=>BATTLE_DATA[id].rank==='normal'),boss=ids.find(id=>BATTLE_DATA[id].rank==='boss');const count=Math.min(pts.length-(boss?1:0),12),enemies=[];let ki=0;for(let i=0;i<count&&enemies.length<60;i++){const size=4+Math.floor(lifeHash(f.id+':pk'+i)*3);for(let j=0;j<size&&enemies.length<60;j++){const ang=j/size*6.283+lifeHash(f.id+i)*6,off=j?1.15:0;let q={x:pts[i].x+Math.cos(ang)*off,z:pts[i].z+Math.sin(ang)*off};if(blocked(q.x,q.z,.42,f))q={x:pts[i].x,z:pts[i].z};enemies.push(await battleActor(normal[(i+j)%normal.length],q,f,String(ki++)));}}if(boss&&pts.length>count)enemies.push(await battleActor(boss,pts.at(-1),f,'boss'));f.enemies=enemies;f.battleReady=true;battleRestoreField(f);})().catch(e=>{f.battlePreparing=null;throw e;});return f.battlePreparing;}
 // Small shared sprite effects: no dynamic lights or shader light count changes.
 let battleTexture=null;const battlePool=[];
 function battleGetFX(color,size){let o=battlePool.find(o=>!o.visible);if(!o){if(battlePool.length>=24)return null;if(!battleTexture){const c=document.createElement('canvas');c.width=c.height=64;const ctx=c.getContext('2d'),g=ctx.createRadialGradient(32,32,0,32,32,31);g.addColorStop(0,'#ffffff');g.addColorStop(.22,'#ffffffd9');g.addColorStop(.5,'#ffffff55');g.addColorStop(1,'#ffffff00');ctx.fillStyle=g;ctx.fillRect(0,0,64,64);battleTexture=new T.CanvasTexture(c);}o=new T.Sprite(new T.SpriteMaterial({map:battleTexture,color,transparent:true,depthWrite:false,blending:T.AdditiveBlending}));o.visible=false;scene.add(o);battlePool.push(o);}o.material.color.set(color);o.material.opacity=1;o.scale.set(size,size,1);o.visible=true;return o;}
@@ -3750,7 +3737,7 @@ const battlePrevRenderBag=renderBag;renderBag=function(mode='bag'){battlePrevRen
 function battleEnchantChoice(k,id,tier){const x=core.equipment[k],d=enchantData[id],i=ITEM_DATA[x?.id],t=tier+2,gate=[24,29,42][tier-1],powder=['P56','P86','P104'][tier-1];if(!x||!d||!i||d.slot!==k||i.t<t||!r13Gate(gate,[35,55,75][tier-1])||core.gold<120*t)return false;const next=cloneBag(core.inventory);if(!takeStack(next,powder,2)||!takeStack(next,d.mat,1))return false;core.inventory=next;core.gold-=120*t;x.enchant=id;x.enchantLevel=tier;return true;}
 renderEnhance=function(){if(!lifeOpen('enhance','장비 강화'))return;let html='';for(const [k,x] of Object.entries(core.equipment)){const i=ITEM_DATA[x.id];if(!['weapon','head','body','feet'].includes(k))continue;const level=x.plus??0,mat=enhanceMat[i.t],n=[1,1,2,2,3][level],price=45*i.t*(level+1);html+=`<div class="life-row"><span>${htmlSafe(itemLabel(x))}</span>${level<5?`<small>${ITEM_DATA[mat].name} ×${n} · ${price} G</small>${lifeBtn('강화','upgrade:'+k,countItem(core.inventory,mat)<n||core.gold<price)}`:'<b>MAX</b>'}</div>`;for(const [id,d] of Object.entries(enchantData))if(d.slot===k)for(let t=1;t<=3;t++){const gate=[24,29,42][t-1],p=['P56','P86','P104'][t-1];if(i.t<t+2||!r13Gate(gate,[35,55,75][t-1]))continue;html+=`<div class="life-row"><span>${d.name} ${['I','II','III'][t-1]}</span><small>${ITEM_DATA[p].name} ×2 · ${ITEM_DATA[d.mat].name} · ${120*(t+2)} G</small>${lifeBtn('인챈트','battleEnchant:'+k+','+id+','+t,countItem(core.inventory,p)<2||countItem(core.inventory,d.mat)<1||core.gold<120*(t+2))}</div>`;}}lifeHTML(html||'<p>강화할 장비가 없습니다.</p>');};
 const battlePrevAction=lifeAction;lifeAction=function(a,k){const b=battleState();if(a==='battleSkills')return battleSkillPanel();if(a==='spellSlot'){const [slot,id]=k.split(','),d=battleMagic.find(x=>x.id===id);if(d&&battleSpellAllowed(d)){const other=1-+slot;if(b.spells[other]===id)b.spells[other]=b.spells[+slot];b.spells[+slot]=id;}return battleSkillPanel();}if(a==='potionSlot'){if(ITEM_DATA[k]&&countItem(core.inventory,k))b.potion=k;return battleSkillPanel();}if(a==='hire')return battleHirePanel();if(a==='hireOne'){if(!battleHire(+k))coreToast('고용비 부족');return battleHirePanel();}if(a==='hireEnd'){battleDismiss();return battleHirePanel();}if(a==='petTake'||a==='petAll'){const indices=a==='petAll'?b.petBag.map((_,i)=>i).reverse():[+k];for(const i of indices){const x=b.petBag[i];if(x&&gainItem(x.id,x.n,x.q))b.petBag.splice(i,1);}return battlePetPanel();}if(a==='battleEnchant'){const [slot,id,t]=k.split(',');if(!battleEnchantChoice(slot,id,+t))coreToast('재료 또는 골드 부족');return renderEnhance();}return battlePrevAction(a,k);};
-function battleValidate(s){const b=s.life?.flags?.battle;if(!b)return;const fail=()=>{throw Error('전투 저장 데이터가 올바르지 않습니다.');},num=(v,min,max)=>Number.isFinite(v)&&v>=min&&v<=max,validItem=x=>ITEM_DATA[x?.id]&&Number.isInteger(x.n)&&x.n>=1&&x.n<=stackCap(ITEM_DATA[x.id])&&Number.isInteger(x.q)&&x.q>=0&&x.q<=100;if(!b.floors||!b.loot||!Array.isArray(b.petBag)||b.petBag.length>[12,18,24,24][s.life.workshop-1]||!b.petBag.every(validItem)||!Array.isArray(b.spells)||b.spells.length<2||b.spells.length>5||!b.spells.every(id=>battleMagic.some(d=>d.id===id))||!ITEM_DATA[b.potion]||!num(b.serial,0,1e12)||!num(b.deviceUntil,0,2e9)||!num(b.potionUntil,0,2e9))fail();for(const [id,rows] of Object.entries(b.floors)){if(id!=='dungeon'&&!battleFloors[id]||!rows||typeof rows!=='object'||Object.keys(rows).length>13)fail();for(const [key,v] of Object.entries(rows))if(!/^(?:[0-9]|1[01]|boss)$/.test(key)||!v||!num(v.hp,0,1845)||!num(v.deadDay,0,s.day))fail();}for(const [id,items] of Object.entries(b.loot)){if(id!=='dungeon'&&!battleFloors[id]||!Array.isArray(items)||items.length>100000)fail();for(const x of items)if(!validItem(x)||!num(x.x,-200,200)||!num(x.z,-200,200)||!/^loot\d+$/.test(x.key))fail();}if(b.hire&&(![17,18,19].includes(b.hire.id)||!num(b.hire.until,0,2e9)||!num(b.hire.hp,0,b.hire.max)||!num(b.hire.max,1,200)||!num(b.hire.price,0,325)||typeof b.hire.departed!=='boolean'))fail();}
+function battleValidate(s){const b=s.life?.flags?.battle;if(!b)return;const fail=()=>{throw Error('전투 저장 데이터가 올바르지 않습니다.');},num=(v,min,max)=>Number.isFinite(v)&&v>=min&&v<=max,validItem=x=>ITEM_DATA[x?.id]&&Number.isInteger(x.n)&&x.n>=1&&x.n<=stackCap(ITEM_DATA[x.id])&&Number.isInteger(x.q)&&x.q>=0&&x.q<=100;if(!b.floors||!b.loot||!Array.isArray(b.petBag)||b.petBag.length>[12,18,24,24][s.life.workshop-1]||!b.petBag.every(validItem)||!Array.isArray(b.spells)||b.spells.length<2||b.spells.length>5||!b.spells.every(id=>battleMagic.some(d=>d.id===id))||!ITEM_DATA[b.potion]||!num(b.serial,0,1e12)||!num(b.deviceUntil,0,2e9)||!num(b.potionUntil,0,2e9))fail();for(const [id,rows] of Object.entries(b.floors)){if(id!=='dungeon'&&!battleFloors[id]||!rows||typeof rows!=='object'||Object.keys(rows).length>100)fail();for(const [key,v] of Object.entries(rows))if(!/^(?:[0-9]|[1-9][0-9]|boss)$/.test(key)||!v||!num(v.hp,0,1845)||!num(v.deadDay,0,s.day))fail();}for(const [id,items] of Object.entries(b.loot)){if(id!=='dungeon'&&!battleFloors[id]||!Array.isArray(items)||items.length>100000)fail();for(const x of items)if(!validItem(x)||!num(x.x,-200,200)||!num(x.z,-200,200)||!/^loot\d+$/.test(x.key))fail();}if(b.hire&&(![17,18,19].includes(b.hire.id)||!num(b.hire.until,0,2e9)||!num(b.hire.hp,0,b.hire.max)||!num(b.hire.max,1,200)||!num(b.hire.price,0,325)||typeof b.hire.departed!=='boolean'))fail();}
 function battleHitAlly(e,f){const h=battleState().hire,a=battleAlly;if(!h||!a||!a.group.visible||h.hp<=0)return false;const dx=a.x-e.x,dz=a.z-e.z,d=Math.hypot(dx,dz);if(d>=distanceFromHero(e)||d>e.type.range||Math.sin(e.heading)*dx+Math.cos(e.heading)*dz<.3*d||!direct(e,a,.08,f))return false;h.hp=Math.max(0,h.hp-Math.max(1,Math.round(e.type.atk*.68)));battleFlash(a.x,a.z,.8,'#f7a58f',.15,.4);if(h.hp<=0)coreToast(npcName(h.id)+' · 전투 불능');return true;}
 
 const PERSONAL_DATA={"N01-1":{"title":"길을 막는 상자","goal":"장터와 숙소 주변을 살펴 실제 공간 수요 확인.","lines":["아스게르: 장터 입구에 쌓아 둔 상자를 봤나? 밤마다 광부들이 저걸 의자 삼아 앉더군. 아침에는 상인이 자기 물건이라고 난리고.","키라: 장터를 넓히면 되는 거 아니에요?","아스게르: 넓힐 땅에 광부들 숙소를 지어 달라는 부탁이 먼저 들어왔네. 둘 다 마을에 필요한 사람들이지.","키라: 그럼 누구에게 얼마나 필요한지부터 알아보죠. 상자에 앉는 분들한테도 물어보고요."]},"N01-2":{"title":"장터의 사정","goal":"시그네·크누드·라스무스와 대화, 기존 구조 활용 대안 마련.","lines":["시그네: 손님이 다니는 길만 비워 주면 나는 좋아. 물건을 둘 자리는 꼭 바깥일 필요가 없거든.","크누드: 우린 일 끝나고 잠깐 앉을 곳이면 돼. 숙소에 남는 자리는 없나?","라스무스: 기존 처마 밑에 선반과 벤치를 놓으면 어떨까? 접히는 걸로 만들면 공간을 나눌 수 있지.","키라: 그럼 새로 땅을 쓰지 않아도 되네요. 촌장님에게 가져가 볼게요."]},"N01-3":{"title":"비가 와도 앉을 곳","goal":"정비에 필요한 제작품을 공급하고 완료 현장 확인.","lines":["아스게르: 이렇게 간단한 방법이 있었군. 회의에서는 다들 자기 자리가 필요하다는 말만 했거든.","키라: 자기 자리보다 무엇을 하는 자리인지가 중요했나 봐요.","아스게르: 잘 배웠네. 다음번엔 회의 전에 내가 장터를 한 바퀴 돌겠어.","키라: 그때 벤치에 앉아서 하세요. 제가 만든 방수 처리를 했으니까요."]},"N02-1":{"title":"바 뒤에 놓인 편지","goal":"티라와 옛 동료의 연락에 관해 대화.","lines":["티라: 편지는 읽고 버리면 되는데, 이건 벌써 세 번째 읽었어. 내가 글을 못 읽는 것도 아닌데 말이야.","키라: 좋은 소식이에요?","티라: 옛 동료들이 다시 모이자네. 예전 같으면 짐부터 꾸렸지. 그런데 요즘은 술통이 비어도 신경 쓰이거든.","키라: 다시 모이는 것과 다시 떠나는 건 다른 일이잖아요.","티라: …그렇네. 그 녀석들 얼굴은 보고 싶어."]},"N02-2":{"title":"그때 마셨던 술","goal":"옛 조리 기록을 확인, 기념 음료에 쓰일 제작품을 마련. 실제 음료 분류는 시스템 연동.","lines":["티라: 예전에 산 넘고 나면 이것부터 마셨거든. 맛은 별로였는데 뜨끈해서 좋았어.","키라: 맛이 별로였으면 이번에는 맛있게 만들어 봐요. 꼭 예전 그대로일 필요는 없잖아요.","티라: 네가 그 말을 하면 내가 늙은 사람이 된 것 같단 말이지. 좋다, 이번엔 좀 달게 해 보자."]},"N02-3":{"title":"마지막 한 잔은 집에서","goal":"펍의 재회 장면 참여, 티라의 선택 확인. 옛 동료는 배경 방문객 활용 가능.","lines":["티라: 오늘은 웃다가 배가 아프네. 옛날에 우리가 얼마나 엉망으로 다녔는지 기억나서 말이야.","키라: 다시 떠나고 싶어졌어요?","티라: 잠깐은. 그런데 손님들이 내일도 이 문으로 들어올 걸 생각하니까 여기 있는 게 좋더라.","키라: 그러면 그분들은 여기로 부르면 되겠네요.","티라: 맞아. 그 녀석들이 나한테 술값을 내게 되는 날이 올 줄이야."]},"N03-1":{"title":"깨진 쇠","goal":"파손 공구를 관찰해 결함 가설 세우기.","lines":["스벤: 저기 놔. 손대지 마. 깨진 부분을 봐야 하니까.","키라: 스벤 씨가 만든 거예요?","스벤: 그래. 그래서 더 기분이 나쁘지. 바위 탓인지 쇠 탓인지 아직 모르겠어.","키라: 사용한 광맥이 어떤 건지 같이 확인해 볼까요? 깨진 쇠만 보면 알기 어려울 수도 있고요."]},"N03-2":{"title":"쇠의 기억","goal":"사용 환경과 원재료 비교, 가공 보조품 제작 또는 비교 시험.","lines":["크누드: 같은 자리에서 예전 곡괭이는 버텼는데 새것은 부러졌어. 그렇다고 예전 것이 더 좋다는 건 아니고.","스벤: …내가 열을 너무 오래 줬나 보군.","키라: 그럼 같은 재료로 가공법만 바꿔 봐요. 이번엔 결과를 비교할 수 있게요.","스벤: 그러지. 나한테 설명하는 날이 올 줄은 몰랐는데."]},"N03-3":{"title":"장인의 서명","goal":"개선품 시험 완료, 실제 작업에 복귀.","lines":["스벤: 이번에는 오래 버텼어. 내가 만든 것 중에 처음으로 부러지는 게 기대됐던 물건이지.","키라: 왜요?","스벤: 어디까지 버티나 보고 싶었거든. 시험 결과도 좋았어. 네 이름을 작업 기록에 적어 두지.","키라: 공구에 새겨 주시는 건 아니에요?","스벤: 그건 내 물건이야. 네 물건에는 네가 새겨."]},"N04-1":{"title":"잘 팔린다던 물건","goal":"가게의 과잉 재고 확인.","lines":["시그네: 저 상자는 보지 마. 볼 때마다 내가 왜 그걸 주문했는지 기억나거든.","키라: 뭔데요? 멀쩡해 보이는데.","시그네: 예쁘고 싸고 손님들이 좋아할 줄 알았지. 그런데 광부들이 저런 걸 들고 일할 일이 없잖아.","키라: 다른 일을 하는 분에게는 필요할 수도 있죠. 물건이 문제인지 손님이 문제인지 알아봐요."]},"N04-2":{"title":"다른 손님","goal":"주민 수요를 확인, 기존 재고를 활용한 완성품 용도 제안.","lines":["라스무스: 이걸 작업장 정리함으로 쓰면 괜찮겠는데? 바닥이 미끄러운 것만 고치면.","키라: 제가 표면 처리를 해 볼게요. 원래 모양을 살리면서 용도를 바꾸면 되겠어요.","시그네: 새 물건을 사들이지 않고 팔 수 있다는 말이지? 아주 좋은 생각이야."]},"N04-3":{"title":"다시 비어가는 선반","goal":"가공된 완성품 확인 및 새 용도로 판매.","lines":["시그네: 봐, 저 상자가 벌써 절반은 없어졌어. 손님이 이게 원래 어디 쓰는 거냐고 묻더라.","키라: 뭐라고 했어요?","시그네: 지금 어디 쓰는지가 중요하다고 했지. 네 공방에도 하나 가져갈래? …돈은 받을게.","키라: 역시 시그네 씨네요."]},"N05-1":{"title":"오래된 표지판","goal":"폐쇄 갱도 현황과 감독의 입장 확인.","lines":["토르킬: 저 표지판은 함부로 옮기지 말게. 저 너머로 들어가지 말라는 뜻이야.","키라: 다른 분들이 다시 열어 달라고 한다던데요.","토르킬: 나도 알지. 일할 곳이 부족한 것은 사실이야. 그렇다고 한번 닫은 곳을 이유 없이 열 수는 없네.","키라: 안전한 자리만 확인할 방법은 없을까요?"]},"N05-2":{"title":"바위보다 먼저 사람","goal":"안전 지점에서 표본 및 구조 확인, 점검용 제작품 납품.","lines":["토르킬: 자네가 들어갈 수 있는 구간은 여기까지야. 이 선을 넘을 필요는 없네.","키라: 안쪽까지 확인해야 하는 건 줄 알았어요.","토르킬: 필요한 정보만 얻으면 돼. 무사히 돌아오는 게 일을 마친 거야.","키라: 그럼 이쪽을 조사하고 장비는 작업자에게 맡길게요."]},"N05-3":{"title":"다시 열린 작업 구역","goal":"감독이 지정한 안전 구간 정비 확인. 위험 폐쇄 유지.","lines":["토르킬: 일부 작업 구역은 다시 쓸 수 있겠어. 나머지는 그대로 닫아 두고.","키라: 전부 여는 건 아니군요.","토르킬: 그게 제대로 된 결과야. 내가 고집을 부리는 게 아니라 위험한 것과 쓸 수 있는 것을 구별해야 하니까.","키라: 다음에 광부들이 또 뭐라고 하면 저도 설명할게요."]},"N06-1":{"title":"느려진 손","goal":"크누드가 숨기는 작업 불편을 알아차리고 상담.","lines":["크누드: 요즘 새 곡괭이들은 왜 이리 무거워? 옛날 물건들은 그렇게 무겁지 않았는데.","키라: 스벤 씨는 오히려 가볍게 만들었다던데요.","크누드: …그래? 하하, 그럼 내 기억이 무거워졌나 보군.","키라: 손에 힘이 잘 들어가는지 한번 보죠. 손잡이만 바꿔도 다를 수 있어요."]},"N06-2":{"title":"손에 맞는 물건","goal":"스벤과 손잡이 개선품 제작, 크누드가 시험 사용.","lines":["스벤: 손 크기도 사람마다 달라. 공구를 사람에 맞추는 게 이상한 일은 아니야.","크누드: 예전엔 그런 거 없이도 하루 종일 일했어.","키라: 지금 편하게 일하는 게 손해는 아니잖아요. 후배들에게도 알려 줄 수 있고요.","크누드: …그래. 일단 한 번 써 보지 뭐."]},"N06-3":{"title":"돌을 읽는 사람","goal":"후배에게 작업 요령을 전하는 장면 확인, 개선품 전달.","lines":["크누드: 이 녀석이 돌을 엉뚱한 데서 두드리길래 말이야. 내가 옆에서 몇 번 알려 줬더니 나보다 빨리 캐더군.","키라: 기분 나쁘세요?","크누드: 처음엔. 그런데 생각해 보니 내가 그걸 알려 준 거잖아. 자랑해도 되는 거 아니겠어?","키라: 네. 그건 아주 많이 자랑하셔도 돼요."]},"N07-1":{"title":"작아진 수확","goal":"작물 상태와 밭의 변화 확인.","lines":["빌마: 이쪽 작물 봐. 모양은 멀쩡한데 수확량이 작년만 못해. 내가 일을 덜 한 것도 아닌데.","키라: 비료를 바꿔 봤어요?","빌마: 더 넣어도 봤지. 아네모네는 땅이 문제라고 하더라. 내가 땅을 모르는 사람처럼 말이야.","키라: 둘 다 맞는 말일 수 있잖아요. 조그만 시험 밭을 만들어 볼까요?"]},"N07-2":{"title":"작은 밭 두 개","goal":"시험 구역 비교, 합의된 농업용 제품 적용. 작물 성장 주기 존중, 기존 작물 손실 금지.","lines":["아네모네: 같은 씨앗이라도 이쪽과 저쪽 땅의 상태가 달라요.","빌마: 알았어. 이번에는 내가 평소 하던 방법하고 네가 말한 방법을 따로 해 볼게.","키라: 그러면 무엇 때문에 달라지는지 알 수 있겠어요. 결과 나오면 같이 확인해요."]},"N07-3":{"title":"종자를 남기는 날","goal":"시험 수확 결과 확인, 보존할 씨앗 및 재배법 정리.","lines":["빌마: 이 정도면 내년에도 심을 수 있겠어. 새 작물로 바꿔 버리면 쉬웠겠지만 이건 우리 밭에서 오래 키운 거거든.","키라: 맛은 어때요?","빌마: 그건 당연히 좋지. 다음에 네 작물과 비교해 볼까? 이번엔 내가 질 생각 없는데.","키라: 아직 끝난 게 아니네요."]},"N08-1":{"title":"빈 바구니","goal":"약초 공급 감소 현장 확인.","lines":["아네모네: 오늘은 꽃을 덜 가져왔어요. 상점에 오는 분들은 많이 찾는데 숲에서는 자꾸 줄어드네요.","키라: 채집하는 사람이 늘었나요?","아네모네: 네. 뿌리까지 가져가는 분들이 많아요. 지금은 잘 팔리겠지만 내년이 걱정돼요.","키라: 직접 키우면 어떨까요? 자라던 곳과 비슷한 환경을 만들 수 있을지 알아봐요."]},"N08-2":{"title":"뿌리가 좋아하는 자리","goal":"숲의 환경 비교 및 재배용 제품 준비. 개체의 무작위 드롭을 필수로 하지 않음.","lines":["비야르케: 여기 그늘이 오래 남아. 바닥은 비가 와도 물이 오래 고이지 않고.","아네모네: 그래서 저쪽에서는 잘 안 자랐나 봐요.","키라: 가게 뒤 시험 자리도 그렇게 바꿔 볼 수 있어요. 바로 크게 키우지는 말고요."]},"N08-3":{"title":"가게 뒤의 봄","goal":"첫 재배 성과 확인 및 공급 방법 합의.","lines":["아네모네: 새 잎이 나왔어요. 작지만 색이 아주 좋네요.","키라: 이걸로 물약을 만들어도 같은 품질이 나올까요?","아네모네: 확인해 봐야죠. 저는 아직 이 아이가 잘 자라는 것만으로도 좋아요.","키라: 그럼 재배법부터 적어 놓죠. 다음 잎은 제가 양보할게요."]},"N09-1":{"title":"뒤집힌 흙","goal":"농장 피해 흔적 확인.","lines":["빌마: 저기 봐. 밤새 밭을 뒤집어 놨어. 더 심해지기 전에 뭔가 해야 해.","비야르케: 발자국이 여러 종류야. 다 같은 동물은 아니군.","키라: 잡는 것부터 할 게 아니라 어디서 오는지 보면 되겠네요.","비야르케: 그래. 숲 쪽으로 와. 흙을 밟아 없애지 않게 조심하고."]},"N09-2":{"title":"먹이가 없던 자리","goal":"숲의 먹이터와 이동로 조사, 방책용 제작품 선정.","lines":["비야르케: 이 나무 밑에는 먹이가 많았는데 지금은 비었어. 밭이 가까우니 그쪽으로 갔겠지.","키라: 여기서 바로 잡는다고 다음번에 안 오는 건 아니겠네요.","비야르케: 맞아. 울타리 틈부터 막자. 필요한 사냥은 내가 할게."]},"N09-3":{"title":"아침의 밭","goal":"개선 방책 설치 및 피해 감소 확인.","lines":["빌마: 이번에는 바깥쪽 흙만 조금 파였어. 밭 안에는 안 들어왔고.","비야르케: 계속 봐야 해. 그래도 이쪽 길을 막은 건 잘했어.","키라: 두 분이 같이 이야기하니까 일이 빨리 끝났네요.","빌마: 저 사람이 말을 좀 많이 했으면 더 빨랐겠지.","비야르케: 필요한 말은 했어."]},"N10-1":{"title":"양팔로도 모자라","goal":"목격담을 듣고 낚시터 확인.","lines":["에스벤: 이번엔 정말 컸어. 내 양팔이 길었으면 설명하기 편했을 텐데 말이야.","키라: 지난번에는 배만큼 크다면서요.","에스벤: 배라고 다 같은 배는 아니지! 이번에는 물 위에 올라오는 걸 똑똑히 봤어.","키라: 그럼 어디였는지부터 알려 주세요. 크기는 가서 생각하고요."]},"N10-2":{"title":"수면 위의 흔적","goal":"어종과 물길 특징 조사, 적합한 낚시 장비·미끼 제작.","lines":["에스벤: 여기 물결이 달라. 보이지? 물 밑에 돌이 있어서 흐름이 갈라져.","키라: 큰 물고기가 좋아하는 자리예요?","에스벤: 종에 따라 달라. 아무리 큰 미끼를 써도 자리가 틀리면 안 물어. 자, 오늘은 여기서 기다려 보자."]},"N10-3":{"title":"크기는 비밀","goal":"지정 관측 또는 확보로 어종 기록, 실제 낚시 판정과 연결.","lines":["키라: 이게 그 물고기예요? 생각보다는 작은데요.","에스벤: 물속에서 보면 다르게 보이는 법이지. 그래도 처음 보는 녀석이야. 이건 정말 자랑할 만하잖아.","키라: 그럼 크기 말고 이름으로 자랑하세요.","에스벤: 좋다. 이름을 붙일 때 내 이름부터 넣자고."]},"N11-1":{"title":"손님이 안 쓰는 작업대","goal":"발명품의 사용 불편 확인.","lines":["라스무스: 여기 손잡이를 당기면 선반이 올라오고, 이쪽을 돌리면 그 아래에서 공구가 나와.","키라: 공구만 꺼내려면 몇 번을 움직여야 해요?","라스무스: …잠깐. 그 말 들으니까 내가 만든 게 조금 이상하게 느껴지는데.","키라: 제가 손님처럼 한 번 써 볼게요. 설명하지 말고 지켜봐 주세요."]},"N11-2":{"title":"덜어내기","goal":"실제 사용 결과 비교, 불필요한 부분 제거 및 필요한 제작품 준비.","lines":["라스무스: 저 손잡이를 빼면 구조가 단순해져. 근데 그러면 내가 밤새 생각한 기능이 하나 없어지잖아.","키라: 그 기능 때문에 제가 병을 넘어뜨렸어요.","라스무스: …알았어. 잘 만든 물건이 되려면 내가 만든 걸 잘 버릴 줄도 알아야겠지."]},"N11-3":{"title":"팔린 발명품","goal":"개선품 사용 확인, 주문 성과 공유.","lines":["라스무스: 손님이 아무 말 없이 쓰더라고. 처음엔 반응이 없어서 실망했어.","키라: 설명을 안 물어봤다는 뜻이잖아요.","라스무스: 그렇지! 나중에 생각해 보니 그게 칭찬이더라. 이번엔 납기도 지켰고.","키라: 시그네 씨가 제일 놀라겠네요."]},"N12-1":{"title":"그대로 남은 병","goal":"복용을 꺼리는 이유 확인.","lines":["이안테: 약은 처방한 만큼 나갔는데 빈 병이 안 돌아옵니다. 광부들에게 물었더니 집에 두었다는 사람이 많더군요.","키라: 맛이 이상해서 그런가요?","이안테: 효과는 확인했습니다. 다만 맛은… 저도 썩 좋아하지 않습니다.","키라: 선생님도 싫으세요? 그럼 바꿔 볼 이유가 충분하네요."]},"N12-2":{"title":"같은 효과, 다른 맛","goal":"검증 가능한 재료 조합 비교, 실제 약효 유지 확인. 사람에게 미검증품 사용 금지.","lines":["이안테: 맛을 바꾸면서 효능이 떨어지면 의미가 없습니다. 색이 예쁘다고 합격시키지도 않을 거고요.","키라: 알겠어요. 기본 효과가 같은 조합만 남기고 나머지는 제외할게요.","이안테: 좋습니다. 시험 결과를 같이 기록하죠. 이런 일은 저 혼자서는 잘 못합니다."]},"N12-3":{"title":"비어 있는 병","goal":"검증 완료품 납품 및 이용 확인.","lines":["크누드: 이번 것은 삼킬 때 얼굴을 찌푸릴 필요가 없더군. 그게 제일 좋아.","이안테: 복용량은 이전과 같습니다. 맛이 좋다고 더 마시는 건 안 됩니다.","키라: 하하, 이제는 그걸 걱정해야 하겠네요.","이안테: 실제로 먹는 약이 좋은 약입니다. 당신 덕분에 조금 나아졌군요."]},"N13-1":{"title":"틀렸을 리가 없는 종이","goal":"오래된 제조 기록과 실제 결과 대조.","lines":["테오프라스토스: 이 제조법은 내가 젊을 때 발표한 거라네. 틀렸을 리 없지.","키라: 그런데 여기 결과는 다르게 나왔어요.","테오프라스토스: 그럼 재료가 문제야. 옛날 재료와 요즘 재료가 같을 리 없으니까.","키라: 그럴 수도 있죠. 그럼 어느 조건에서 달라지는지 같이 알아봐요."]},"N13-2":{"title":"기록에 없는 조건","goal":"서로 다른 재료 조건을 비교해 결과 재현, 제조법 수정.","lines":["키라: 영감님이 기록한 재료는 이쪽 상태였을 가능성이 있어요. 이걸 쓰니까 같은 결과가 나왔거든요.","테오프라스토스: …그때 연구실에서는 그 상태의 재료만 구할 수 있었지. 그래서 다른 조건을 생각하지 못했군.","키라: 그러면 틀렸다기보다는 빠뜨린 거네요. 고치면 돼요."]},"N13-3":{"title":"두 개의 이름","goal":"수정 기록을 완성하고 공동 연구자로 인정.","lines":["테오프라스토스: 논문 첫 줄에 자네 이름을 넣었네. 내 이름보다 뒤지만 말이지.","키라: 순서가 중요해요?","테오프라스토스: 중요하지! …자네가 그런 질문을 하는 걸 보니 별로 안 중요할 수도 있겠군.","키라: 다음번에는 제 공방에서 연구하고 제 이름부터 쓸게요.","테오프라스토스: 흥. 그럼 내가 먼저 읽고 고쳐 주겠네."]},"N14-1":{"title":"비어 있는 칸","goal":"오래된 광산 장부의 기록 불일치 확인.","lines":["네펠리: 이 해에는 작업자가 더 많았다는 기록이 있는데 이름이 몇 개 빠져 있어요. 숫자는 남았는데 사람이 없네요.","키라: 오래돼서 잉크가 지워진 건가요?","네펠리: 아마 작성할 때부터 적지 않은 것 같아요. 당시 사람들 가운데 기억하는 분이 있는지 물어보고 싶어요.","키라: 크누드 씨와 촌장님부터 찾아볼게요."]},"N14-2":{"title":"기억하는 사람들","goal":"주민 기억과 유품/문서 교차 확인.","lines":["크누드: 저 사람은 이름 대신 별명으로 불렀어. 본명은 내가 잘 모르겠는데, 여기 있는 물건의 주인은 알아.","아스게르: 그 시절 다른 장부도 남아 있을 걸세. 일한 기록이 아니라 숙소에 들어온 기록이지.","키라: 서로 맞춰 보면 확인할 수 있겠네요. 기억이 다른 부분은 표시해 두고요."]},"N14-3":{"title":"이름을 남기다","goal":"검증된 이름만 추가, 불확실한 기록 구분.","lines":["네펠리: 아직 확인하지 못한 이름도 있어요. 하지만 이제는 왜 빈칸인지 적어 둘 수 있죠.","키라: 전부 채우지 않아도 괜찮아요?","네펠리: 없는 이름을 만들어 넣는 것보다는 낫습니다. 나중에 누군가 더 알게 될 수도 있고요.","키라: 그때 다시 같이 찾아봐요."]},"N15-1":{"title":"두 사람의 보고서","goal":"분담 보상 분쟁의 서로 다른 진술 확인.","lines":["프레야: 두 분이 같은 일을 자신이 했다고 주장합니다. 서류는 둘 다 그럴듯하고요.","키라: 누가 거짓말하는 건가요?","프레야: 반드시 그렇지는 않습니다. 보는 위치가 달랐을 수도 있죠. 현장에서 확인할 수 있는 정보부터 찾겠습니다.","키라: 제가 본 것이 있다면 말씀드릴게요."]},"N15-2":{"title":"보이지 않았던 일","goal":"실제 작업 기록 및 증거 확인, 역할 구분.","lines":["키라: 한 사람은 앞쪽에서 싸웠고 다른 사람은 돌아갈 길을 확보했어요. 둘 다 없었으면 어려웠을 것 같아요.","프레야: 보고서에는 앞에서 싸운 기록만 있군요. 길을 확보한 일은 어떻게 증명할 수 있을까요?","키라: 남긴 표시와 그 사람이 사용한 물건을 확인하면 될 것 같아요."]},"N15-3":{"title":"각자의 몫","goal":"증거에 따른 정산과 새 기록 방식 확인.","lines":["프레야: 두 사람 모두 동의했습니다. 이번부터는 역할별 기록을 따로 남기기로 했고요.","키라: 보상 때문에 싸운 사람들인데 같이 돌아갈까요?","프레야: 방금 펍으로 함께 가더군요. 술값은 누가 내는지까지 정해 드릴 필요는 없겠지요."]},"N16-1":{"title":"남은 접시","goal":"비싼 요리와 단골 수요의 차이 확인.","lines":["스텔리오스: 오늘의 특별 요리인데 반도 팔리지 않았어. 재료가 얼마나 좋은 건데!","키라: 맛이 없어서요?","스텔리오스: 그럴 리가! …광부들이 가격표만 보고 돌아가더군.","키라: 일 끝나고 매일 먹기엔 부담스러울 수도 있죠. 맛있고 든든한 평범한 음식은 어때요?"]},"N16-2":{"title":"평범한 재료의 시험","goal":"일반 재료의 조리·가공 완성품을 함께 검토. 요리 시스템 미정이면 공방 제조 가능한 조리 보조품으로 연결.","lines":["스텔리오스: 이런 재료는 매일 쓰던 것들이야. 특별한 요리가 나오겠어?","키라: 특별한 날 먹는 게 아니라 평범한 날에 맛있는 걸 만들자는 거잖아요.","스텔리오스: …좋아. 대신 맛을 포기하는 건 아니야. 내가 하는 장사니까."]},"N16-3":{"title":"빈 접시","goal":"정식 시험 판매와 단골 반응 확인.","lines":["스텔리오스: 오늘은 접시가 다 비었어. 한 녀석은 내일도 같은 게 있느냐고 물었지.","키라: 그게 좋은 평가 아닌가요?","스텔리오스: 최고급 식재료 얘길 한 번도 안 했는데 말이야. …하하, 내일은 양을 더 준비해야겠다."]},"N17-1":{"title":"끝내지 못한 일","goal":"비고의 이전 독립 탐사 실패 이야기를 듣고 현재 가능 목표 확인. 현재 계약의 배신 아님.","lines":["비고: 그건 내가 못한 게 아니야. 혼자서 문을 지탱하면서 반대쪽에 갈 수는 없잖아.","키라: 그럼 처음부터 둘이 갈 일이었네요.","비고: …그런 셈이지. 보고서에는 그렇게 쓰기 좀 민망하더라고.","키라: 다시 갈 거면 이번엔 역할부터 정해요. 제가 도울 수 있는지 알아보고요."]},"N17-2":{"title":"서로 다른 자리","goal":"공동 탐사에서 각자 맡은 역할 수행. 다중 스위치 등 시스템이 없으면 경계·조사 장면으로 대체 승인 필요.","lines":["비고: 내가 앞을 보고 있을게. 네가 확인해야 하는 건 저쪽이지?","키라: 네. 제가 끝났다고 말할 때까지 여기에 있어 주세요.","비고: 알았어. 괜히 멋있어 보이는 일은 안 할게. 오늘은 정말로."]},"N17-3":{"title":"두 사람의 보고","goal":"공동 성과 제출, 비고의 인식 변화.","lines":["비고: 프레야, 여기 기록은 키라가 확인한 거야. 내가 한 것하고 따로 적어 줘.","프레야: 오늘은 말씀하시기 전에 이미 구분해 두었습니다.","키라: 이번에는 보고서가 아주 짧게 끝났네요.","비고: 하하! …내가 앞에 섰다는 건 한 줄 정도 더 써도 되지 않나?"]},"N18-1":{"title":"반대되는 결과","goal":"칼리스타의 마법 관측 기록 확인.","lines":["칼리스타: 같은 주문인데 이쪽에서는 반응이 다르게 나와요. 처음에는 내가 틀렸다고 생각했거든요.","키라: 틀릴 수도 있죠.","칼리스타: 그게 재밌는 거예요! 어디가 틀렸는지 찾으면 새로운 조건을 알게 되잖아요.","키라: 그럼 장소와 재료를 한 번씩 바꿔서 비교해 봐요."]},"N18-2":{"title":"바꾼 것은 하나","goal":"서로 다른 조건의 관측을 비교, 나머지 조건 동일 유지.","lines":["칼리스타: 이번에는 장소만 바꿨어요. 전에는 재료도 같이 바꿔서 무엇 때문인지 알 수 없었죠.","키라: 결과가 다른 건 확실하네요. 그러면 처음 가설을 수정해야겠어요.","칼리스타: 네. 생각보다 기분이 좋네요. 잘못된 답을 하나 지웠으니까요."]},"N18-3":{"title":"빈칸이 없는 실험 기록","goal":"결과와 실패 조건을 기록, 연구 협업 지속.","lines":["칼리스타: 여기 성공한 결과, 여기 실패한 결과. 둘 다 기록했어요.","키라: 영감님이 보면 왜 이런 것까지 적느냐고 하실지도 몰라요.","칼리스타: 그러면 그분이 같은 실험을 두 번 안 하시게 될 거예요. 감사하셔야죠!"]},"N19-1":{"title":"소문 값","goal":"보물 위치에 관한 오래된 소문과 기존 기록 대조.","lines":["아킬레아스: 소문 하나에 돈을 줬는데, 듣고 나니 절반은 다들 아는 이야기더군. 그래도 절반이 맞으면 남는 장사야.","키라: 그 소문이 정말 보물 이야기인지 확인은 했어요?","아킬레아스: 아니. 그래서 지금부터 확인하는 거지. 네가 생각보다 더 깐깐하군."]},"N19-2":{"title":"아무것도 없는 상자","goal":"지정 지점 확인, 빈 상자의 주변 경로 정보 확보.","lines":["아킬레아스: …비었군. 이래서 남의 소문에 돈을 주면 안 돼.","키라: 여기에 보관함이 있었다는 건 사람들이 이쪽 길을 썼다는 뜻일 수도 있잖아요.","아킬레아스: 길 자체를 팔자는 말인가? 안전한 길을 찾는 사람은 꽤 있지.","키라: 정확하면요. 지도도 제대로 확인해야죠."]},"N19-3":{"title":"지도 한 장의 값","goal":"실제 경로 기록을 네펠리·길드와 검토, 발견 정보의 가치 확인.","lines":["아킬레아스: 생각보다 잘 팔릴 만한 정보더군. 빈 상자가 전혀 헛일은 아니었어.","네펠리: 출처를 제대로 남겼으니 나중에 대조할 수도 있겠네요.","아킬레아스: 이러다 내가 도적이 아니라 지도 상인이 되겠는데.","키라: 그게 나쁘지는 않잖아요?"]},"N20-1":{"title":"빈 수레","goal":"공급 지연의 원인과 실제 생산 여력 확인.","lines":["다프니: 수레가 비어 있으니 가볍고 좋겠다고 생각할 수도 있겠지. 장사하는 사람에게는 제일 비싼 수레야.","키라: 물건을 못 받으셨어요?","다프니: 공급처가 약속한 양을 못 만들었어. 그렇다고 공방 하나를 몰아붙여 봐야 다음 달에도 같은 일이 생기겠지.","키라: 먼저 실제로 만들 수 있는 물량부터 확인해 봐요."]},"N20-2":{"title":"약속을 줄이는 용기","goal":"여러 생산처의 가능 품목 확인, 합리적인 공급 계획 수립. 실제 생산 시 품질 기준 유지.","lines":["시그네: 이 물건은 내가 조금씩 구할 수 있어. 하지만 매번 같은 양은 어렵겠네.","키라: 제 공방에서 만들 수 있는 건 이쪽이에요. 다른 제품은 다른 곳에 부탁하는 게 낫고요.","다프니: 좋아. 많이 약속하는 것보다 지킬 수 있게 약속하는 게 중요하지. 거래처에도 그렇게 말하겠어."]},"N20-3":{"title":"채워진 수레","goal":"수정된 주문 계획과 실제 첫 납품 확인.","lines":["다프니: 이번에는 약속한 물건이 모두 들어왔어. 양은 전보다 적지만 다음번에도 믿을 수 있겠군.","키라: 그럼 나중에 조금씩 늘리면 되죠. 공방도 더 좋아질 테고요.","다프니: 맞아. 장사는 한 번에 크게 벌고 사라지는 일이 아니니까. 다음번에는 좋은 차를 가져오지."]}};
@@ -4441,7 +4428,7 @@ const KS={brew:"data:image/webp;base64,UklGRtDaAwBXRUJQVlA4IMTaAwBQlQ6dASoABgAEP
 // ==== R14 UI: 아이콘 기반 화면 (KI = 내장 아이콘 데이터) ====
 const KB={};
 (()=>{for(const k in KI){const b=atob(KI[k].split(',')[1]),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);KB[k]=URL.createObjectURL(new Blob([u],{type:'image/webp'}));document.documentElement.style.setProperty('--ki-'+k,'url('+KB[k]+')');}})();
-const kimg=(k,c='')=>KB[k]?`<img class="ki ${c}" src="${KB[k]}" alt="" draggable="false">`:`<i class="ki ki-none ${c}"></i>`;
+let kimg=(k,c='')=>KB[k]?`<img class="ki ${c}" src="${KB[k]}" alt="" draggable="false">`:`<i class="ki ki-none ${c}"></i>`;
 const kit=id=>kimg(id,'ki-item');
 const K_SLOT_ICON={weapon:'s_weapon',head:'s_head',body:'s_body',feet:'s_feet',accessory1:'s_acc',accessory2:'s_acc',device:'s_device',pickaxe:'s_pickaxe',axe:'s_axe',hoe:'s_hoe',rod:'s_rod'};
 const K_EL={'화':'e_fire','수':'e_water','풍':'e_wind','토':'e_earth','불':'e_fire','물':'e_water','바람':'e_wind','땅':'e_earth'};
@@ -4817,5 +4804,301 @@ coreRender=function(force){
   try{ $('kira-rest').hidden=!coreAtBed(); }catch(e){}
 };
 
-main().catch(error=>{status.textContent='마을을 불러오지 못했습니다.';console.error(error);});
+
+
+/* R20 UPDATE BEGIN */
+// Source for the R20 block embedded in index.html. Run build-r20.cjs after editing.
+const R20_SPOTS={bed:{x:4.25,z:-3.0},chair:{x:3.6,z:.6},craft:{x:-4.6,z:-2.6},storage:{x:-4.7,z:2.3}};
+function r20RegisterRooms(){
+ for(const [id,spec] of Object.entries(portalSpecs)){
+  const data=id==='workshop'?{...spec,w:12,d:10}:spec;
+  portals.set(id,{...data,id,point:new T.Vector3(),direction:new T.Vector3(0,0,1),bounds:{minX:-data.w/2+.29,maxX:data.w/2-.29,minZ:-data.d/2+.29,maxZ:data.d/2-.23},blockers:[],unit:.31});
+ }
+}
+furnishWorkshop=async function(r){
+ shell(r,['#d5c7b1','#645143','#888075',['#a78360','#ae8b65','#a47e59','#b08c67']]);
+ windowAt(r.group,-5.86,1.9,-2,Math.PI/2);windowAt(r.group,1.3,1.9,-4.86);
+ rug(r.group,'#667263',4.6,4,0,.4);hearth(r,2,-4.45);
+ const bench=await setProp(r,'room-workbench',R20_SPOTS.craft.x,R20_SPOTS.craft.z,{height:1,turn:Math.PI/2,solid:true});
+ const shelf=await setProp(r,'room-shelf',R20_SPOTS.storage.x,R20_SPOTS.storage.z,{height:2,turn:Math.PI/2,solid:true});
+ const table=await setProp(r,'room-table',3.6,-.45,{height:.8,shape:[.65,1,.7],solid:true});
+ await Promise.all([
+  setProp(r,'room-bed',R20_SPOTS.bed.x,R20_SPOTS.bed.z,{depth:2.1,solid:true}),
+  setProp(r,'room-stool',R20_SPOTS.chair.x,R20_SPOTS.chair.z,{height:.48,solid:true}),
+  setProp(r,'room-cauldron',-3,-3.9,{height:.85,solid:true}),
+  setProp(r,'room-journal',-4.6,-2.6,{width:.45,y:bench.y}),
+  setProp(r,'room-bottles',-4.5,-2.95,{width:.38,y:bench.y}),
+  setProp(r,'room-vial',-4.6,2.3,{height:.23,y:shelf.y*.7}),
+  setProp(r,'mug',3.6,-.45,{height:.18,y:table.y}),
+  setProp(r,'basket',-5,3.9,{height:.65,solid:true}),
+  setProp(r,'lantern',-1.8,-4.7,{height:.55,y:1.5}),
+  setProp(r,'lantern',4.5,-4.7,{height:.55,y:1.5})
+ ]);
+};
+const r20Distance=p=>Math.hypot(player.x-p.x,player.z-p.z);
+coreAtBed=()=>activeRoom?.id==='workshop'&&r20Distance(R20_SPOTS.bed)<1.65;
+wsAtBench=()=>activeRoom?.id==='workshop'&&r20Distance(R20_SPOTS.craft)<2.1;
+const r20Recover=coreRecover;
+coreRecover=function(){if(activeRoom?.id==='workshop'&&r20Distance(R20_SPOTS.chair)<1.5)r20Recover();};
+lifeFieldAllowed=()=>true;
+worldVisible=()=>true;
+worldRegions[0].name='키라의 공방';
+trailLabel.village='공방';
+
+// Existing town/office saves resume at the expanded workshop; field saves stay put.
+const r20PlaceBase=corePlace;
+corePlace=async function(loc){
+ if(loc.id==='village'||portals.has(loc.id)&&loc.id!=='workshop')loc={id:'workshop',x:0,z:3.8,heading:Math.PI};
+ await r20PlaceBase(loc);r20Visitors(0);r20SyncUI();
+};
+changeRoom=function(room){if(!room)return worldRender();return r20Travel('workshop');};
+const r20Switch=switchField;
+switchField=async function(link){if(link?.to==='village')return r20Travel('workshop');return r20Switch(link);};
+battleReturn=function(){
+ if(coreBusy)return;coreBusy=true;r08Defeat=true;coreStop();
+ return corePlace({id:'workshop',x:0,z:3.8,heading:Math.PI}).then(()=>{battleState().hire=null;coreToast('공방으로 돌아왔습니다.');}).catch(console.error).finally(()=>{r08Defeat=false;coreBusy=false;coreAutoSave();});
+};
+setDoorButton=function(){roomButton.hidden=true;};
+
+const R20_REGIONS=[
+ {name:'공방',color:'#c4b281',desc:'제작 · 보관 · 휴식 · 방문객',areas:[['workshop','키라의 공방']]},
+ {name:'바람숲',color:'#8dbb8c',desc:'가지 · 약초 · 원목 · 버섯',areas:[['outer','외곽'],['hunt','사냥터']]},
+ {name:'햇살 농지',color:'#d3c280',desc:'재배 · 수확 · 들풀',areas:[['farm','농지']]},
+ {name:'은물내',color:'#90c7cb',desc:'샘물 · 점토 · 모래 · 낚시',areas:[['river','강가']]},
+ {name:'그늘숲',color:'#8aa88b',desc:'더 높은 채집 숙련과 도구가 필요한 자원',areas:[['shadePath','숲길'],['shadeHunt','사냥터'],['shadeDepth','깊은 숲']]},
+ {name:'달그림자 호수',color:'#91abc7',desc:'수생 자원 · 낚시',areas:[['lake','호수']]},
+ {name:'돌빛 광산',color:'#bcb4ac',desc:'상층에서 심층으로 갈수록 단단한 광맥',areas:[['g01','상층'],['g02','중층'],['g03','심층']]},
+ {name:'옛길 던전',color:'#c0a3af',desc:'위험 지역 · 아래층일수록 강한 적',areas:[['dungeon','1층'],...Array.from({length:11},(_,i)=>['b'+String(i+2).padStart(2,'0'),(i+2)+'층'])]}
+];
+worldRender=function(){
+ if(!lifeOpen('worldmap','세계지도'))return;
+ lifeHTML('<div class="r20-map">'+R20_REGIONS.map(r=>`<section class="r20-region" style="border-top:3px solid ${r.color}"><h2>${r.name}</h2><p>${r.desc}</p><div class="r20-places">${r.areas.map(([id,name])=>lifeBtn(name,'r20Travel:'+id,false,`class="${areaID()===id?'here':''}"`)).join('')}</div></section>`).join('')+'</div>');
+};
+async function r20Travel(id){
+ if(coreBusy||transitionTimer||lifeAnimation||!R20_REGIONS.some(r=>r.areas.some(a=>a[0]===id)))return;
+ if(areaID()===id){lifeClose();return;}
+ coreStop();coreBusy=true;passage.dataset.active='yes';
+ try{
+  let loc={id,x:0,z:3.8,heading:Math.PI};
+  if(id!=='workshop'){
+   const f=await getField(id).then(lifePrepareField);
+   const entrance=trailLinks[id]?.find(l=>l.to==='village')??trailLinks[id]?.[0];
+   const aim=entrance?spawnFromLink(entrance):{x:0,z:0};
+   const p=[...f.navigation.values()].filter(p=>!blocked(p.x,p.z,.3,f)).sort((a,b)=>Math.hypot(a.x-aim.x,a.z-aim.z)-Math.hypot(b.x-aim.x,b.z-aim.z))[0];
+   if(!p)throw Error('도착 지점을 찾을 수 없습니다.');
+   loc={id,x:p.x,z:p.z,heading:entrance?Math.atan2(-entrance.dx,-entrance.dz):0};
+  }
+  await corePlace(loc);worldState().seen[worldRegion(id)]=true;worldState().target=null;
+  lifeClose();lifeFieldVisit();
+ }catch(e){console.error(e);coreToast(e.message||'이동하지 못했습니다.');}
+ finally{passage.dataset.active='no';coreBusy=false;coreRender(true);r20SyncUI();coreAutoSave();}
+}
+
+// Guests arrive on a schedule, without interrupting the player's work.
+let r20GuestStamp='',r20Guests=[];
+function r20VisitorIds(){
+ const h=core.minute/60%24;if(h<8||h>=22)return [];
+ const l=life(),ids=[];
+ const push=n=>{if(n>0&&npc[n-1]&&!ids.includes(n))ids.push(n);};
+ if(!l.started||mainCheck(l.main))push(mainNPC[l.main]);
+ for(const o of l.orders)push(npc.find(n=>npcName(n.id)===o.npc)?.id);
+ for(const id of Object.keys(personalState().active))if(personalReady(id))push(+id.slice(1,3));
+ const merchants=[3,4,5,7,10,11,12];push(merchants[(core.day+Math.floor(h/3))%merchants.length]);
+ push(1+((core.day*3+Math.floor(h/2))%npc.length));
+ return ids.slice(0,4);
+}
+function r20Visitors(dt){
+ if(!ready&&!activeRoom)return;
+ for(const n of npc)n.group.visible=false;
+ r08Guests=[];if(activeRoom?.id!=='workshop')return;
+ const ids=r20VisitorIds(),stamp=core.day+':'+Math.floor(core.minute/120)+':'+ids.join(',');
+ if(stamp!==r20GuestStamp){
+  r20GuestStamp=stamp;
+  const room=activeRoom,used=[];
+  const points=[...room.navigation.values()].filter(p=>p.z>1&&p.z<3.6&&p.x>-2.8&&p.x<2.8&&!blocked(p.x,p.z,.4,room)).sort((a,b)=>Math.hypot(a.x,a.z-2)-Math.hypot(b.x,b.z-2));
+  r20Guests=ids.map(id=>{const p=points.find(p=>used.every(q=>Math.hypot(p.x-q.x,p.z-q.z)>1.3));if(!p)return null;used.push(p);return {n:id,x:p.x,z:p.z,group:npc[id-1].group};}).filter(Boolean);
+ }
+ r08Guests=r20Guests;
+ for(const g of r20Guests){const n=npc[g.n-1];n.x=g.x;n.z=g.z;n.group.visible=true;n.group.position.set(g.x,0,g.z);n.group.rotation.y=Math.PI;n.mixer.update(dt);}
+}
+npcStepSchedule=r20Visitors;
+npcScheduleRoom=n=>r20VisitorIds().includes(n)?'workshop':null;
+const r20OriginalNPC=npcInteract;
+function r20GuestPanel(n){
+ lifeNPC=n;if(!lifeOpen('visitor',npcName(n)))return;
+ const hasStory=mainNPC[life().main]===n;
+ lifeHTML(`<div class="r20-menu">${lifeBtn(' 의뢰','orders')}${stockFor(npcName(n)).length?lifeBtn('거래','shop'):''}${lifeBtn(hasStory?'이야기 듣기':'대화','r20Talk:'+n)}${lifeBtn('헤어지기','close')}</div>`);
+}
+npcInteract=function(n){if(activeRoom?.id==='workshop')return r20GuestPanel(n);return r20OriginalNPC(n);};
+// Orders are independent contracts. The list is sorted by material/recipe tier.
+openOrders=function(name){const l=life();return ORDER_DATA.filter(o=>o.npc===name&&!l.orders.some(a=>a.id===o.id)&&!l.orderHistory.some(a=>a.id===o.id&&a.day===core.day)).sort((a,b)=>ITEM_DATA[a.item].t-ITEM_DATA[b.item].t||a.q-b.q).slice(0,4).map(r13Cond);};
+acceptOrder=function(id,name){const l=life(),o=openOrders(name).find(o=>o.id===id);if(!o||l.orders.length>=12)return false;l.orders.push({...o,accept:core.day,due:core.day+6});return true;};
+renderOrders=function(n){
+ lifeNPC=n;const name=npcName(n);if(!lifeOpen('orders',name+' · 의뢰'))return;
+ const active=life().orders.filter(o=>o.npc===name),offered=openOrders(name);
+ const row=(o,accepted)=>`<article class="r20-order"><div><b>${htmlSafe(ITEM_DATA[o.item].name)} ×${o.n}</b><small>Q${o.q}${htmlSafe(r13Txt(o))} · ${orderReward(o,[{q:o.q,n:o.n}])} G${accepted?' · '+Math.max(0,o.due-core.day+1)+'일 남음':''}</small></div>${accepted?lifeBtn('납품','deliver:'+o.id,r13Have(o)<o.n):lifeBtn('수락','accept:'+o.id,life().orders.length>=12)}</article>`;
+ lifeHTML(active.map(o=>row(o,true)).join('')+offered.map(o=>row(o,false)).join('')||'<p class="r20-meta">오늘 맡길 의뢰는 없습니다.</p>');
+};
+renderJournal=function(){
+ if(!lifeOpen('journal','의뢰 목록'))return;
+ const orders=[...life().orders].sort((a,b)=>ITEM_DATA[a.item].t-ITEM_DATA[b.item].t||a.q-b.q);
+ const personal=Object.keys(personalState().active).map(id=>`<article class="r20-order"><div><b>${htmlSafe(PERSONAL_DATA[id].title)}</b><small>${htmlSafe(personalTaskText(id))}</small></div></article>`).join('');
+ const contracts=orders.map(o=>`<article class="r20-order"><div><b>${htmlSafe(ITEM_DATA[o.item].name)} ×${o.n}</b><small>${htmlSafe(o.npc)} · Q${o.q}${htmlSafe(r13Txt(o))} · ${Math.max(0,o.due-core.day+1)}일 남음</small></div><span>${r13Have(o)}/${o.n}</span>${activeRoom?.id==='workshop'?lifeBtn('납품','r20Deliver:'+o.id,r13Have(o)<o.n):''}</article>`).join('');
+ lifeHTML(contracts+personal||'<p class="r20-meta">받아 둔 의뢰가 없습니다.</p>');
+};
+
+// Keep the player-facing HUD independent from the old overlapping button updates.
+const r20OpenBase=lifeOpen;
+lifeOpen=function(view,title){
+ if(coreCombat()&&['menu','bag','equipment','journal'].includes(view)){
+  if(coreBusy||transitionTimer||lifeAnimation)return false;
+  coreStop();coreModal=true;lifeView=view;lifeTitle.textContent=title;lifeWindow.hidden=false;corePanel.hidden=true;return true;
+ }
+ return r20OpenBase(view,title);
+};
+function r20Menu(){
+ if(!lifeOpen('menu','메뉴'))return;
+ lifeHTML(`<p class="r20-meta">${coreDate().text} · ${core.gold.toLocaleString('ko-KR')} G</p><div class="r20-menu">${lifeBtn('가방','bag')}${lifeBtn('장비','equipment')}${lifeBtn('의뢰','r20Journal')}${lifeBtn('세계지도','r20Map',coreCombat())}${lifeBtn('상태 · 저장','r20Status',coreCombat())}${lifeBtn('화면 확대','r20Full')}${life().flags.slime||life().main>8?lifeBtn('뿌뿌','pet'):''}</div>`);
+}
+$('kira-menu').onclick=r20Menu;
+const r20LifeNearby=lifeNearby;
+lifeNearby=function(){
+ if(activeRoom?.id==='workshop'){
+  const options=[];
+  const add=(type,label,p,range)=>{const d=r20Distance(p);if(d<range)options.push({type,label,d});};
+  add('r20sleep','잠자기',R20_SPOTS.bed,1.65);add('r20rest','휴식',R20_SPOTS.chair,1.5);
+  add('craft','제작',R20_SPOTS.craft,2.1);add('r20storage','창고',R20_SPOTS.storage,1.75);
+  add('r20exit','밖으로',{x:0,z:activeRoom.d/2-.45},1.45);
+  for(const g of r20Guests){const d=r20Distance(g);if(d<1.7)options.push({type:'npc',n:g.n,label:'대화',d});}
+  return options.sort((a,b)=>a.d-b.d)[0]??null;
+ }
+ const base=r20LifeNearby();
+ const f=ruinActive(),loot=f&&(battleState().loot[f.id]??[]).filter(x=>distanceFromHero(x)<1.8&&direct(player,x,.06,f)).sort((a,b)=>distanceFromHero(a)-distanceFromHero(b))[0];
+ if(loot&&(!base||distanceFromHero(loot)<base.d))return {type:'r20loot',label:'줍기',d:distanceFromHero(loot)};
+ return base;
+};
+const r20Interact=lifeInteract;
+lifeInteract=function(o){
+ if(!o||coreModal||coreBusy||transitionTimer||lifeAnimation)return;
+ if(o.type==='r20sleep')return coreSleep();
+ if(o.type==='r20rest')return coreRecover();
+ if(o.type==='r20storage')return renderBag('storage');
+ if(o.type==='r20exit')return worldRender();
+ if(o.type==='r20loot'){if(!battleCollect(ruinActive()))coreToast('가방이 가득 찼습니다.');return;}
+ return r20Interact(o);
+};
+lifeButton.onclick=()=>lifeInteract(lifeNearby());
+function r20SyncUI(){
+ if(!ready)return;
+ const fighting=!!ruinActive(),blockedUI=coreModal||coreBusy||!!transitionTimer||!!lifeAnimation;
+ const near=blockedUI||coreCombat()?null:lifeNearby();
+ const labels={node:'줍기',fish:'낚시',plot:'경작',hunt:'사냥',npc:'대화',story:'살펴보기'};
+ lifeButton.hidden=!near;
+ if(near){lifeButton.textContent=labels[near.type]??near.label;lifeButton.disabled=near.type==='r20rest'&&core.rest>=2;}
+ actionBar.hidden=!fighting||blockedUI||!!near;attackKey.hidden=false;dodgeKey.hidden=false;
+ attackKey.textContent='공격';dodgeKey.textContent='회피';
+ $('kira-menu').hidden=coreBusy||!!transitionTimer;$('kira-menu').disabled=coreBusy||!!transitionTimer;$('kira-menu').textContent='메뉴';
+ document.body.dataset.r20Combat=fighting?'yes':'no';
+ for(const el of [roomButton,lifeTask,worldBtn,r12Cargo,r12TargetLabel,r12Alternate,pickKey,petKey,guardKey,potionKey,shortcutKey,r13SwapKey,...battleSpellKeys])el.hidden=true;
+}
+const r20Draw=draw;draw=function(){r20Draw();r20SyncUI();};
+const r20CoreRender=coreRender;coreRender=function(force){r20CoreRender(force);r20SyncUI();};
+// A single short pickup line, with no confirmation or extra panel.
+r12Flyup=function(n,text){
+ const p=new T.Vector3(n.x,areaHeight(n.x,n.z)+1,n.z).project(camera);
+ if(p.z>1||p.z<-1)return;
+ const el=document.createElement('div');el.className='r20-pickup';el.textContent=text;
+ el.style.left=(p.x*.5+.5)*innerWidth+'px';el.style.top=(-p.y*.5+.5)*innerHeight+'px';
+ document.body.append(el);setTimeout(()=>el.remove(),1100);
+};
+const r20Collect=battleCollect;
+battleCollect=function(f,auto=false){
+ if(!f)return 0;
+ const toasts=coreToast;coreToast=msg=>{if(/ \+\d/.test(msg))r12Flyup(player,msg.replace(/^뿌뿌 · /,''));else toasts(msg);};
+ try{return r20Collect(f,auto);}finally{coreToast=toasts;}
+};
+
+// Wider sword strikes; the enchantment is released from the blade on the finisher.
+const r20SlashFX=[];
+function r20Slash(a){
+ const w=core.equipment.weapon,element=R13EL[w?.enchant],color={fire:'#ff9a51',ice:'#b7eaff',wind:'#a7ffcf',earth:'#edcb85'}[element]??'#fff3ca';
+ const radius=a.chain===2||a.heavy?4.2:3.3,arc=a.chain===2?Math.PI*1.7:Math.PI*1.25;
+ const mesh=new T.Mesh(new T.RingGeometry(radius-.6,radius,42,1,-arc/2,arc),new T.MeshBasicMaterial({color,transparent:true,opacity:.7,side:T.DoubleSide,depthWrite:false,blending:T.AdditiveBlending}));
+ mesh.rotation.x=-Math.PI/2;mesh.rotation.z=Math.PI/2-player.heading;mesh.position.set(player.x,areaHeight(player.x,player.z)+.7,player.z);scene.add(mesh);r20SlashFX.push({mesh,t:.22,max:.22});
+}
+function r20SwordMagic(a,hits){
+ const w=core.equipment.weapon,el=R13EL[w?.enchant];if(!el||a.chain!==2&&!a.heavy)return;
+ const lv=battleEnLevel(w),cost=3+lv*2;if(core.mp<cost)return;
+ core.mp-=cost;const f=ruinActive();if(!f)return;
+ const range=(el==='wind'?6:4)+lv*.7,color={fire:'#ff9147',ice:'#b7eaff',wind:'#a7ffcf',earth:'#edcb85'}[el];
+ for(const e of f.enemies.filter(e=>e.hp>0&&distanceFromHero(e)<range&&direct(player,e,.06,f))){
+  const dot=Math.cos(Math.atan2(e.x-player.x,e.z-player.z)-player.heading);if(el!=='earth'&&dot<-.15)continue;
+  battleDamage(e,battleFormula(e,[.9,1.5,2.2][lv-1],'magic',el),'magic');
+  if(e.hp>0&&BATTLE_DATA[e.cid]?.rank==='normal'&&(el==='ice'||el==='earth')){e.mode='stagger';e.clock=el==='ice'?.65:.35;}
+  battleFlash(e.x,e.z,.8,color,.22,.8+lv*.2);
+ }
+ battleFlash(player.x,player.z,.7,color,.3,range*.7);
+}
+let r20AttackHeld=false,r20AttackPointer=null;
+function r20EndAttack(){r20AttackHeld=false;r20AttackPointer=null;}
+attackKey.onpointerdown=e=>{if(e.button!==0)return;e.preventDefault();attackKey.setPointerCapture?.(e.pointerId);r20AttackHeld=true;r20AttackPointer=e.pointerId;ruinAttack();};
+attackKey.onpointerup=r20EndAttack;attackKey.onpointercancel=r20EndAttack;attackKey.onlostpointercapture=r20EndAttack;
+window.addEventListener('blur',r20EndAttack);
+const r20BattleTick=battleTick;
+battleTick=function(dt){
+ r20BattleTick(dt);
+ for(let i=r20SlashFX.length-1;i>=0;i--){const a=r20SlashFX[i];a.t-=dt;if(a.t<=0){a.mesh.removeFromParent();a.mesh.geometry.dispose();a.mesh.material.dispose();r20SlashFX.splice(i,1);}else{a.mesh.material.opacity=.7*a.t/a.max;a.mesh.scale.setScalar(1+(1-a.t/a.max)*.12);}}
+ if(coreModal||coreBusy||transitionTimer||!ruinActive()){r20EndAttack();return;}
+ if(r20AttackHeld)ruinAttack();
+};
+// Existing first-floor enemy IDs stay in the same slots; extra pack IDs use the
+// regular battle save records, while the legacy dungeon snapshot keeps 12 slots.
+const r20PrepareBattle=battlePrepare;
+battlePrepare=async function(f){
+ await r20PrepareBattle(f);if(f.id!=='dungeon'||f.r20Packs)return;
+ const points=[...f.navigation.values()].filter(p=>p.z<17&&!blocked(p.x,p.z,.45,f)&&!(trailLinks[f.id]??[]).some(l=>Math.hypot(p.x-l.x,p.z-l.z)<6));
+ const used=[],extra=[];
+ for(const p of points.sort((a,b)=>lifeHash(f.id+a.x+':'+a.z)-lifeHash(f.id+b.x+':'+b.z))){
+  if(used.some(q=>Math.hypot(q.x-p.x,q.z-p.z)<3))continue;
+  const cid=['C01','C02','C03','C05'][used.length%4];
+  extra.push(await battleActor(cid,p,f,String(f.enemies.length+extra.length)));used.push(p);if(used.length>=24)break;
+ }
+ f.enemies.push(...extra);f.r20Packs=true;battleRestoreField(f);
+};
+// Enemies follow reachable paths instead of waiting for the player at their home.
+const r20EnemyTurn=ruinEnemyTurn;
+ruinEnemyTurn=function(f,e,dt,slots){
+ if(e.hp>0&&e.group.visible&&e.mode!=='strike'&&e.mode!=='stagger'&&ruinCombat.hp>0&&distanceFromHero(e)<30&&!direct(e,player,.2,f)){
+  e.r20PathAt=(e.r20PathAt??0)-dt;
+  if(e.r20PathAt<=0){e.steps=route(e,player,f);e.r20PathAt=.8+lifeHash(e.key)*.4;}
+  const moving=moveActor(e,dt);display(e);animateActor(e,moving,dt);return;
+ }
+ return r20EnemyTurn(f,e,dt,slots);
+};
+
+// Code-drawn item symbols replace the bitmap UI; original character art is untouched.
+kimg=function(k,c=''){
+ const i=ITEM_DATA[k],type=i?i.cat:k;
+ const paths=/무기|attack|s_weapon/.test(type)?'<path d="M7 25 25 7m-5 1 5-1-1 5M5 22l5 5m-3-3-3 4"/>':/목재|wood|A03/.test(type)?'<path d="m7 22 14-14 5 5-14 14zM18 10l5 5M8 21l5 5"/>':/광물|회수품|mine|A06/.test(type)?'<path d="m6 23 3-13 12-5 7 14-7 8H10zM9 10l9 7 3 10m-3-10 10 2"/>':/약초|식재|gather|farm/.test(type)?'<path d="M9 27C6 12 15 5 26 6c1 13-6 19-15 17M9 27 23 10m-9 12 1-9"/>':/음식|potion|hp|mp/.test(type)?'<path d="M12 5h8m-7 0v7L7 23q-2 5 4 5h10q6 0 4-5l-6-11V5M9 21h14"/>':'<path d="m16 4 12 7v13l-12 6-12-6V11zm-12 7 12 7 12-7M16 18v12"/>';
+ return `<svg class="ki ${c}" viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="${i?['#c8d9af','#aad2e1','#b8b7eb','#edc78d','#e5b1c1'][i.t-1]:'#d4dec7'}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round">${paths}</svg>`;
+};
+
+const r20LifeAction=lifeAction;
+lifeAction=function(a,k){
+ if(a==='r20Travel'){void r20Travel(k);return;}
+ if(a==='r20Map')return worldRender();
+ if(a==='r20Journal')return renderJournal();
+ if(a==='r20Status'){lifeClose();return coreOpen();}
+ if(a==='r20Full')return $('full').onclick?.();
+ if(a==='r20Talk')return r20OriginalNPC(+k);
+ if(a==='r20Deliver'){
+  if(activeRoom?.id!=='workshop')return;
+  const o=life().orders.find(o=>o.id===k);if(o){const paid=deliverOrder(o.id,o.npc);if(paid){coreToast('납품 +'+paid+' G');coreAutoSave();}}return renderJournal();
+ }
+ if(a==='pet')return battlePetPanel();
+ return r20LifeAction(a,k);
+};
+
+/* R20 UPDATE END */
+main().catch(error=>{status.textContent='공방을 불러오지 못했습니다.';console.error(error);});
 </script></body></html>

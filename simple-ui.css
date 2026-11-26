@@ -1,0 +1,37 @@
+/* R20: one menu, one contextual action; all frames are drawn in code. */
+#room-action,#room-state,#life-bag,#life-journal,#life-task,#world-map-button,
+#nav-box,#nav-marker,#full,#r13-cam,#r13-sprint,#r12-cargo,#r12-target,
+#r12-alternate,#battle-pickup,#battle-pet,#shortway,#guard,
+#combat-ui .magic-key,#health,#kira-sleep,#kira-rest{display:none!important}
+#life-action,#strike,#dodge,#kira-menu{background:#203a34ed!important;background-image:none!important;border:1px solid #d6dfc566!important;color:#fff7e4!important;box-shadow:0 3px 15px #0003!important;font:600 18px system-ui!important;text-indent:0!important;letter-spacing:.03em}
+#life-action::before,#life-action::after,#strike::before,#strike::after,#dodge::before,#dodge::after,#kira-menu::before,#kira-menu::after{display:none!important;content:none!important}
+#life-action{left:auto!important;right:34px!important;bottom:40px!important;top:auto!important;transform:none!important;min-width:100px!important;width:auto!important;height:62px!important;padding:0 24px!important;border-radius:32px!important;z-index:7!important}
+#life-action[hidden],#combat-ui[hidden],#strike[hidden],#dodge[hidden]{display:none!important}
+#kira-menu{position:fixed!important;left:auto!important;right:20px!important;top:18px!important;width:74px!important;min-width:74px!important;height:46px!important;padding:0!important;border-radius:24px!important;z-index:8!important}
+#combat-ui{position:fixed!important;left:auto!important;right:28px!important;bottom:32px!important;display:flex!important;align-items:flex-end;gap:14px!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;z-index:6!important}
+#strike{position:static!important;width:92px!important;height:92px!important;min-height:0!important;border-radius:50%!important;padding:0!important}
+#dodge{position:static!important;width:64px!important;height:64px!important;min-height:0!important;border-radius:50%!important;padding:0!important;font-size:16px!important;order:-1}
+#kira-hud{position:fixed!important;left:18px!important;top:18px!important;width:190px!important;padding:0!important;border:0!important;box-shadow:none!important;background:none!important;pointer-events:none}
+#kira-hud .kira-name,#kira-hud .kira-xp,#kira-hud label,#kira-xp,#kira-hud .kira-bar span{display:none!important}
+#kira-hud .kira-bar{margin:4px 0!important;position:relative}
+#kira-hud progress{height:8px!important;width:100%!important;border:0!important;border-radius:6px!important;background:#192923aa!important}
+#kira-hud .kira-bar b{font-size:12px!important;color:#f6f5ed!important;text-shadow:0 1px 3px #000;position:static!important}
+body[data-r20-combat=no] #kira-hud .kira-bar{display:none!important}
+#kira-fatigue{position:static!important;color:#f1ead7!important;font:14px system-ui!important;background:none!important;min-height:0!important;padding:4px 0!important;text-shadow:0 1px 3px #000}
+#kira-date,#kira-time,#kira-gold{position:fixed!important;left:50%!important;right:auto!important;transform:translateX(-50%);text-align:center!important;color:#f3efdf!important;text-shadow:0 1px 4px #0008;pointer-events:none;font:14px system-ui!important}
+#kira-time{top:18px!important;font-size:20px!important}#kira-date{top:42px!important}#kira-gold{display:none!important}
+#district{left:50%!important;top:65px!important;transform:translateX(-50%);padding:0!important;background:none!important;border:0!important;box-shadow:none!important;font-size:15px!important;letter-spacing:.04em;text-shadow:0 1px 3px #0008}
+#life-window,#kira-panel{background:#182c29f5!important;background-image:none!important;border:1px solid #b9cdb566!important;border-radius:22px!important;box-shadow:0 16px 70px #0006!important;color:#f4eddb!important}
+#life-content button,#kira-panel button{background-image:none!important;font-size:16px!important;min-height:46px;border-radius:12px}
+#life-close,#kira-close{background-image:none!important;color:#fff!important;font-size:22px!important}
+.r20-menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:650px;margin:24px auto}.r20-menu button{min-height:74px!important;font-size:19px!important}
+.r20-meta{text-align:center;font-size:16px;color:#cfdbc9;margin:20px}
+.r20-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.r20-region{padding:18px;border:1px solid #a5bca044;border-radius:16px;background:#30473c55}.r20-region h2{font-size:20px;margin:0 0 8px}.r20-region p{font-size:14px;color:#c9d5c0;line-height:1.6;min-height:44px}.r20-places{display:flex;flex-wrap:wrap;gap:8px}.r20-places button{flex:1 1 90px;white-space:nowrap;padding:8px 12px!important}.r20-places .here{border-color:#daca8b!important;color:#eadbaa}
+.r20-order{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid #c8d8b92b}.r20-order>div{flex:1}.r20-order b{display:block;font-size:18px}.r20-order small{display:block;font-size:14px;color:#c6d5c0;margin-top:6px}
+.r20-pickup{position:fixed;pointer-events:none;z-index:12;color:#fff8dc;font:500 15px system-ui;text-shadow:0 1px 3px #000;white-space:nowrap;animation:r20-pickup 1.05s ease-out forwards;transform:translate(-50%,0)}
+@keyframes r20-pickup{0%{opacity:0;translate:0 5px}15%{opacity:1}75%{opacity:1}100%{opacity:0;translate:0 -35px}}
+.r12-flyup,#r12-target-label{display:none!important}
+.k-slot .ki,.k-eq .ki,.ki-item{background:none!important}.ki{object-fit:contain}
+.k-eqbg,.cau-hint{background-image:none!important}
+.k-cau{background:#243c35!important;background-image:none!important}.cau-slot{background:#172d27!important;background-image:none!important;border:1px solid #b2c49b66!important}.cau-rframe{background:none!important}.cau-banner,.cau-line{display:none!important}
+@media(max-width:800px){.r20-map{grid-template-columns:repeat(2,minmax(0,1fr))}#kira-hud{width:140px!important}#life-action{right:20px!important;bottom:26px!important}.r20-region{padding:12px}}
