@@ -4807,6 +4807,7 @@ coreRender=function(force){
 
 
 
+
 /* R20 UPDATE BEGIN */
 // Source for the R20 block embedded in index.html. Run build-r20.cjs after editing.
 const R20_SPOTS={bed:{x:4.25,z:-3.0},chair:{x:3.6,z:.6},craft:{x:-4.6,z:-2.6},storage:{x:-4.7,z:2.3}};
@@ -4903,6 +4904,10 @@ function r20VisitorIds(){return activeRoom?.id==='workshop'&&r20Visit?[r20Visit.
 function r20PickVisit(){
  const v=r20VisitState(),storyNPC=mainNPC[life().main];
  if(v.serial%4===0&&storyNPC&&(!life().started||mainCheck(life().main))&&v.last['story:'+life().main]!==core.day)return {id:storyNPC,kind:'story'};
+ const people=npc.filter(n=>n.id!==storyNPC&&v.last[n.id]!==core.day);
+ const reporting=people.find(n=>{const id=personalID(n.id,personalStage(n.id));return personalState().active[id]&&personalReady(id);});
+ if(reporting)return {id:reporting.id,kind:'personal'};
+ if(v.serial%3===1){const person=people.find(n=>personalCanStart(n.id)&&!personalState().active[personalID(n.id,personalStage(n.id))]);if(person)return {id:person.id,kind:'personal'};}
  const available=npc.filter(n=>v.last[n.id]!==core.day&&openOrders(npcName(n.id)).length);
  if(v.serial%4===3){
   const merchants=npc.filter(n=>v.last[n.id]!==core.day&&stockFor(npcName(n.id)).length);
@@ -4961,7 +4966,7 @@ const r20OriginalNPC=npcInteract;
 function r20GuestPanel(n){
  if(!r20Visit||r20Visit.id!==n||r20Visit.phase!=='waiting')return;
  lifeNPC=n;
- if(r20Visit.kind==='story')return r20OriginalNPC(n);
+ if(r20Visit.kind==='story'||r20Visit.kind==='personal')return r20OriginalNPC(n);
  const name=npcName(n),intro=(DAILY_DATA[n]?.[0]??name+': 키라, 잠깐 괜찮을까?').split(' / ');
  if(r20Visit.kind==='merchant')return lifeReadDialogue(name,[...intro,name+': 오늘 가져온 물건을 보고 싶으면 보여 줄게.'],()=>renderShop(n));
  const o=r20Visit.order;if(!o)return r20Depart();
