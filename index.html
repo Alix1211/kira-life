@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>공방주 키라의 라이프 · R20</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>공방주 키라의 라이프 · R21</title>
 <style>
 /* R12 — all interface artwork is code. No raster UI frames or icons. */
 :root{color-scheme:dark;--ink:#f6f0df;--muted:#b7c4b8;--panel:#172c2beF;--line:#9eb9a448;--gold:#edcf91;--green:#9cceb2;--danger:#df9a87;font-family:"Malgun Gothic",system-ui,sans-serif}
@@ -2391,13 +2391,13 @@ function ruinAttack(aim=null){
  const f=ruinActive();if(!f||transitionTimer||coreModal||coreBusy||lifeAnimation||ruinCombat.hp<=0)return;
  if(ruinCombat.move){if(ruinCombat.move.kind==='strike'&&ruinCombat.move.total-ruinCombat.move.elapsed<=.25)ruinCombat.queued=true;return;}
  const live=f.enemies.filter(e=>e.hp>0&&direct(player,e,.08,f)).sort((a,b)=>distanceFromHero(a)-distanceFromHero(b));
- const enemy=aim&&live.includes(aim)&&distanceFromHero(aim)<4.2?aim:live.find(e=>distanceFromHero(e)<=4.2);
+ const enemy=aim&&live.includes(aim)&&distanceFromHero(aim)<2.5?aim:live.find(e=>distanceFromHero(e)<=2.5&&Math.cos(Math.atan2(e.x-player.x,e.z-player.z)-player.heading)>=.5);
  ruinCombat.target=null;player.steps=[];
  if(enemy)player.heading=Math.atan2(enemy.x-player.x,enemy.z-player.z);
  const chain=ruinCombat.chainTime>0?ruinCombat.chain:0;
  const clip=heroClips['cut'+chain];
  const total=[.28,.30,.42][chain],contact=[.12,.14,.20][chain];
- ruinCombat.move={kind:'strike',elapsed:0,contact,total,chain,damage:[1,1.15,1.6][chain]};
+ ruinCombat.move={kind:'strike',elapsed:0,contact,total,chain,damage:[1,1.05,1.35][chain]};
  animateOnce(playerRig,clip);playerRig.current.setEffectiveTimeScale(clip.duration/total);ruinCombat.chain=(chain+1)%3;ruinCombat.chainTime=total+.70;
 }
 function distanceFromHero(e){return Math.hypot(e.x-player.x,e.z-player.z);}
@@ -2509,7 +2509,7 @@ function stepRuin(dt){
    const hits=f.enemies.filter(e=>{
     const dx=e.x-player.x,dz=e.z-player.z,d=Math.hypot(dx,dz);
     const dot=(Math.sin(player.heading)*dx+Math.cos(player.heading)*dz)/Math.max(.01,d);
-    return e.hp>0&&d<=(a.chain===2||a.heavy?4.2:3.3)&&(dot>=(a.chain===2?-.4:-.1)||d<.6)&&direct(player,e,.06,f);
+    return e.hp>0&&d<=(a.chain===2||a.heavy?2.2:2.0)&&dot>=.5&&direct(player,e,.06,f);
    }).sort((e,b)=>distanceFromHero(e)-distanceFromHero(b));
    let power=a.damage;if(hits.length&&a.heavy&&battleDevice('P62')){power=2;life().quest.deviceHit=true;}for(const e of hits){battleDamage(e,ruinDamage(e,power),'sword');battleFlash(e.x,e.z,1,'#ffe1a4',.15,.35);}
    r20SwordMagic(a,hits);
@@ -4806,6 +4806,7 @@ coreRender=function(force){
 
 
 
+
 /* R20 UPDATE BEGIN */
 // Source for the R20 block embedded in index.html. Run build-r20.cjs after editing.
 const R20_SPOTS={bed:{x:4.25,z:-3.0},chair:{x:3.6,z:.6},craft:{x:-4.6,z:-2.6},storage:{x:-4.7,z:2.3}};
@@ -4894,42 +4895,87 @@ async function r20Travel(id){
  finally{passage.dataset.active='no';coreBusy=false;coreRender(true);r20SyncUI();coreAutoSave();}
 }
 
-// Guests arrive on a schedule, without interrupting the player's work.
-let r20GuestStamp='',r20Guests=[];
-function r20VisitorIds(){
- const h=core.minute/60%24;if(h<8||h>=22)return [];
- const l=life(),ids=[];
- const push=n=>{if(n>0&&npc[n-1]&&!ids.includes(n))ids.push(n);};
- if(!l.started||mainCheck(l.main))push(mainNPC[l.main]);
- for(const o of l.orders)push(npc.find(n=>npcName(n.id)===o.npc)?.id);
- for(const id of Object.keys(personalState().active))if(personalReady(id))push(+id.slice(1,3));
- const merchants=[3,4,5,7,10,11,12];push(merchants[(core.day+Math.floor(h/3))%merchants.length]);
- push(1+((core.day*3+Math.floor(h/2))%npc.length));
- return ids.slice(0,4);
+// Exactly one guest owns the arrival/wait/departure lifecycle.
+let r20Guests=[],r20Visit=null;
+const r20VisitTime=()=>wsTime();
+function r20VisitState(){return life().flags.visitFlow??(life().flags.visitFlow={serial:0,nextAt:0,last:{}});}
+function r20VisitorIds(){return activeRoom?.id==='workshop'&&r20Visit?[r20Visit.id]:[];}
+function r20PickVisit(){
+ const v=r20VisitState(),storyNPC=mainNPC[life().main];
+ if(v.serial%4===0&&storyNPC&&(!life().started||mainCheck(life().main))&&v.last['story:'+life().main]!==core.day)return {id:storyNPC,kind:'story'};
+ const available=npc.filter(n=>v.last[n.id]!==core.day&&openOrders(npcName(n.id)).length);
+ if(v.serial%4===3){
+  const merchants=npc.filter(n=>v.last[n.id]!==core.day&&stockFor(npcName(n.id)).length);
+  if(merchants.length)return {id:merchants[v.serial%merchants.length].id,kind:'merchant'};
+ }
+ if(!available.length)return null;
+ const n=available[v.serial%available.length],offers=openOrders(npcName(n.id));
+ const doable=offers.find(o=>recipeAllowed(ITEM_DATA[o.item]));
+ return {id:n.id,kind:'order',order:doable??offers[0]};
+}
+function r20Depart(){
+ if(!r20Visit||r20Visit.phase==='leaving')return;
+ const n=npc[r20Visit.id-1],room=activeRoom;
+ if(!room||room.id!=='workshop'){r20Visit=null;r20Guests=[];r08Guests=[];return;}
+ r20Visit.phase='leaving';n.steps=route(n,r20Visit.entry,room);
+ r20VisitState().nextAt=Math.max(r20VisitState().nextAt,r20VisitTime()+45);
 }
 function r20Visitors(dt){
- if(!ready&&!activeRoom)return;
  for(const n of npc)n.group.visible=false;
- r08Guests=[];if(activeRoom?.id!=='workshop')return;
- const ids=r20VisitorIds(),stamp=core.day+':'+Math.floor(core.minute/120)+':'+ids.join(',');
- if(stamp!==r20GuestStamp){
-  r20GuestStamp=stamp;
-  const room=activeRoom,used=[];
-  const points=[...room.navigation.values()].filter(p=>p.z>1&&p.z<3.6&&p.x>-2.8&&p.x<2.8&&!blocked(p.x,p.z,.4,room)).sort((a,b)=>Math.hypot(a.x,a.z-2)-Math.hypot(b.x,b.z-2));
-  r20Guests=ids.map(id=>{const p=points.find(p=>used.every(q=>Math.hypot(p.x-q.x,p.z-q.z)>1.3));if(!p)return null;used.push(p);return {n:id,x:p.x,z:p.z,group:npc[id-1].group};}).filter(Boolean);
+ r20Guests=[];r08Guests=[];
+ if(activeRoom?.id!=='workshop'){
+  if(r20Visit){r20VisitState().nextAt=r20VisitTime()+30;r20Visit=null;}return;
  }
- r08Guests=r20Guests;
- for(const g of r20Guests){const n=npc[g.n-1];n.x=g.x;n.z=g.z;n.group.visible=true;n.group.position.set(g.x,0,g.z);n.group.rotation.y=Math.PI;n.mixer.update(dt);}
+ const h=core.minute/60%24,v=r20VisitState(),room=activeRoom;
+ if(!r20Visit&&!coreModal&&!coreBusy&&!transitionTimer&&h>=8&&h<22&&r20VisitTime()>=v.nextAt){
+  const choice=r20PickVisit();
+  if(choice){
+   const entry={x:0,z:room.d/2-.8};
+   const target=[...room.navigation.values()].filter(p=>p.z>1&&p.z<2.8&&p.x<-.5&&p.x>-2.1&&!blocked(p.x,p.z,.4,room)).sort((a,b)=>Math.hypot(a.x+1.2,a.z-2)-Math.hypot(b.x+1.2,b.z-2)).find(p=>route(entry,p,room).length);
+   if(target){
+    const n=npc[choice.id-1];n.x=entry.x;n.z=entry.z;n.heading=Math.PI;n.speed=1.65;n.steps=route(entry,target,room);
+    r20Visit={...choice,entry,phase:'arriving',waitUntil:r20VisitTime()+45,stuck:0};v.serial++;v.nextAt=r20VisitTime()+75;
+    v.last[choice.id]=core.day;if(choice.kind==='story')v.last['story:'+life().main]=core.day;
+   }
+  }else v.nextAt=r20VisitTime()+60;
+ }
+ if(!r20Visit)return;
+ const n=npc[r20Visit.id-1];n.group.visible=true;
+ if(!coreModal&&!coreBusy&&!transitionTimer){
+  const before={x:n.x,z:n.z},moving=moveActor(n,dt);
+  if(r20Visit.phase==='arriving'&&!n.steps.length){r20Visit.phase='waiting';r20Visit.waitUntil=r20VisitTime()+45;}
+  if(r20Visit.phase==='waiting'){
+   turnActor(n,player.x-n.x,player.z-n.z,dt);
+   if(r20VisitTime()>=r20Visit.waitUntil||h>=22)r20Depart();
+  }
+  if(r20Visit.phase==='leaving'&&!n.steps.length){n.group.visible=false;r20Visit=null;return;}
+  if(n.steps.length&&Math.hypot(n.x-before.x,n.z-before.z)<.0001)r20Visit.stuck+=dt;else r20Visit.stuck=0;
+  if(r20Visit.stuck>10){n.group.visible=false;r20Visit=null;return;}
+  animateActor(n,moving,dt);
+ }
+ display(n);r20Guests=[{n:n.id,x:n.x,z:n.z,group:n.group}];r08Guests=r20Guests;
 }
 npcStepSchedule=r20Visitors;
 npcScheduleRoom=n=>r20VisitorIds().includes(n)?'workshop':null;
 const r20OriginalNPC=npcInteract;
 function r20GuestPanel(n){
- lifeNPC=n;if(!lifeOpen('visitor',npcName(n)))return;
- const hasStory=mainNPC[life().main]===n;
- lifeHTML(`<div class="r20-menu">${lifeBtn(' 의뢰','orders')}${stockFor(npcName(n)).length?lifeBtn('거래','shop'):''}${lifeBtn(hasStory?'이야기 듣기':'대화','r20Talk:'+n)}${lifeBtn('헤어지기','close')}</div>`);
+ if(!r20Visit||r20Visit.id!==n||r20Visit.phase!=='waiting')return;
+ lifeNPC=n;
+ if(r20Visit.kind==='story')return r20OriginalNPC(n);
+ const name=npcName(n),intro=(DAILY_DATA[n]?.[0]??name+': 키라, 잠깐 괜찮을까?').split(' / ');
+ if(r20Visit.kind==='merchant')return lifeReadDialogue(name,[...intro,name+': 오늘 가져온 물건을 보고 싶으면 보여 줄게.'],()=>renderShop(n));
+ const o=r20Visit.order;if(!o)return r20Depart();
+ const item=ITEM_DATA[o.item],pay=orderReward(o,[{q:o.q,n:o.n}]);
+ lifeReadDialogue(name,[...intro,`${name}: ${item.name} ${o.n}개를 부탁하고 싶어. 품질은 ${o.q} 이상${o.trait?', '+o.trait+' 특성이 있는 것으로':''}이면 좋겠어. 보수는 ${pay} G야.`],()=>{
+  lifeView='r20Offer';lifeDialog=null;
+  lifeHTML(cgDialogue(name,'맡아 줄 수 있을까?')+`<div class="life-dialog-footer">${lifeBtn('맡을게요','r20Accept')}${lifeBtn('이번에는 어려워요','r20Decline')}</div>`);
+ });
 }
 npcInteract=function(n){if(activeRoom?.id==='workshop')return r20GuestPanel(n);return r20OriginalNPC(n);};
+const r20CloseVisit=lifeClose;
+lifeClose=function(){const spoke=!!r20Visit&&['dialog','r20Offer','shop','npc','personalOffer','orders'].includes(lifeView)&&lifeNPC===r20Visit.id;r20CloseVisit();if(spoke)r20Depart();};
+const r20AfterVisit=npcAfter;
+npcAfter=function(n){if(r20Visit?.id===n){lifeClose();r20Depart();return;}r20AfterVisit(n);};
 // Orders are independent contracts. The list is sorted by material/recipe tier.
 openOrders=function(name){const l=life();return ORDER_DATA.filter(o=>o.npc===name&&!l.orders.some(a=>a.id===o.id)&&!l.orderHistory.some(a=>a.id===o.id&&a.day===core.day)).sort((a,b)=>ITEM_DATA[a.item].t-ITEM_DATA[b.item].t||a.q-b.q).slice(0,4).map(r13Cond);};
 acceptOrder=function(id,name){const l=life(),o=openOrders(name).find(o=>o.id===id);if(!o||l.orders.length>=12)return false;l.orders.push({...o,accept:core.day,due:core.day+6});return true;};
@@ -4969,7 +5015,7 @@ lifeNearby=function(){
   add('r20sleep','잠자기',R20_SPOTS.bed,1.65);add('r20rest','휴식',R20_SPOTS.chair,1.5);
   add('craft','제작',R20_SPOTS.craft,2.1);add('r20storage','창고',R20_SPOTS.storage,1.75);
   add('r20exit','밖으로',{x:0,z:activeRoom.d/2-.45},1.45);
-  for(const g of r20Guests){const d=r20Distance(g);if(d<1.7)options.push({type:'npc',n:g.n,label:'대화',d});}
+  for(const g of r20Guests){const d=r20Distance(g);if(d<1.7&&r20Visit?.phase==='waiting')options.push({type:'npc',n:g.n,label:'대화',d});}
   return options.sort((a,b)=>a.d-b.d)[0]??null;
  }
  const base=r20LifeNearby();
@@ -5022,17 +5068,17 @@ battleCollect=function(f,auto=false){
 const r20SlashFX=[];
 function r20Slash(a){
  const w=core.equipment.weapon,element=R13EL[w?.enchant],color={fire:'#ff9a51',ice:'#b7eaff',wind:'#a7ffcf',earth:'#edcb85'}[element]??'#fff3ca';
- const radius=a.chain===2||a.heavy?4.2:3.3,arc=a.chain===2?Math.PI*1.7:Math.PI*1.25;
+ const radius=a.chain===2||a.heavy?2.2:2.0,arc=Math.PI*2/3;
  const mesh=new T.Mesh(new T.RingGeometry(radius-.6,radius,42,1,-arc/2,arc),new T.MeshBasicMaterial({color,transparent:true,opacity:.7,side:T.DoubleSide,depthWrite:false,blending:T.AdditiveBlending}));
- mesh.rotation.x=-Math.PI/2;mesh.rotation.z=Math.PI/2-player.heading;mesh.position.set(player.x,areaHeight(player.x,player.z)+.7,player.z);scene.add(mesh);r20SlashFX.push({mesh,t:.22,max:.22});
+ mesh.rotation.x=-Math.PI/2;mesh.rotation.z=player.heading-Math.PI/2;mesh.position.set(player.x,areaHeight(player.x,player.z)+.7,player.z);scene.add(mesh);r20SlashFX.push({mesh,t:.22,max:.22});
 }
 function r20SwordMagic(a,hits){
  const w=core.equipment.weapon,el=R13EL[w?.enchant];if(!el||a.chain!==2&&!a.heavy)return;
  const lv=battleEnLevel(w),cost=3+lv*2;if(core.mp<cost)return;
  core.mp-=cost;const f=ruinActive();if(!f)return;
- const range=(el==='wind'?6:4)+lv*.7,color={fire:'#ff9147',ice:'#b7eaff',wind:'#a7ffcf',earth:'#edcb85'}[el];
+ const range=(el==='wind'?3.3:2.7)+lv*.3,color={fire:'#ff9147',ice:'#b7eaff',wind:'#a7ffcf',earth:'#edcb85'}[el];
  for(const e of f.enemies.filter(e=>e.hp>0&&distanceFromHero(e)<range&&direct(player,e,.06,f))){
-  const dot=Math.cos(Math.atan2(e.x-player.x,e.z-player.z)-player.heading);if(el!=='earth'&&dot<-.15)continue;
+  const dot=Math.cos(Math.atan2(e.x-player.x,e.z-player.z)-player.heading);if(dot<.5)continue;
   battleDamage(e,battleFormula(e,[.9,1.5,2.2][lv-1],'magic',el),'magic');
   if(e.hp>0&&BATTLE_DATA[e.cid]?.rank==='normal'&&(el==='ice'||el==='earth')){e.mode='stagger';e.clock=el==='ice'?.65:.35;}
   battleFlash(e.x,e.z,.8,color,.22,.8+lv*.2);
@@ -5076,15 +5122,19 @@ ruinEnemyTurn=function(f,e,dt,slots){
  return r20EnemyTurn(f,e,dt,slots);
 };
 
-// Code-drawn item symbols replace the bitmap UI; original character art is untouched.
-kimg=function(k,c=''){
- const i=ITEM_DATA[k],type=i?i.cat:k;
- const paths=/무기|attack|s_weapon/.test(type)?'<path d="M7 25 25 7m-5 1 5-1-1 5M5 22l5 5m-3-3-3 4"/>':/목재|wood|A03/.test(type)?'<path d="m7 22 14-14 5 5-14 14zM18 10l5 5M8 21l5 5"/>':/광물|회수품|mine|A06/.test(type)?'<path d="m6 23 3-13 12-5 7 14-7 8H10zM9 10l9 7 3 10m-3-10 10 2"/>':/약초|식재|gather|farm/.test(type)?'<path d="M9 27C6 12 15 5 26 6c1 13-6 19-15 17M9 27 23 10m-9 12 1-9"/>':/음식|potion|hp|mp/.test(type)?'<path d="M12 5h8m-7 0v7L7 23q-2 5 4 5h10q6 0 4-5l-6-11V5M9 21h14"/>':'<path d="m16 4 12 7v13l-12 6-12-6V11zm-12 7 12 7 12-7M16 18v12"/>';
- return `<svg class="ki ${c}" viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="${i?['#c8d9af','#aad2e1','#b8b7eb','#edc78d','#e5b1c1'][i.t-1]:'#d4dec7'}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round">${paths}</svg>`;
-};
+// Keep the repository's original KI item icons and full CG dialogue presentation.
+const r21OriginalKimg=kimg;
+kimg=function(k,c=''){return !KB[k]&&ITEM_DATA[k]?r12Icon(ITEM_DATA[k]):r21OriginalKimg(k,c);};
 
 const r20LifeAction=lifeAction;
 lifeAction=function(a,k){
+ if(a==='r20Accept'||a==='r20Decline'){
+  if(!r20Visit||lifeView!=='r20Offer')return;
+  const n=r20Visit.id,o=r20Visit.order,yes=a==='r20Accept';
+  if(yes&&!acceptOrder(o.id,npcName(n))){coreToast('의뢰 목록이 가득 찼습니다.');return;}
+  lifeReadDialogue(npcName(n),[yes?'키라: 맡을게요. 준비되면 보내 드릴게요.':'키라: 이번에는 맡기 어려울 것 같아요.',npcName(n)+(yes?': 고마워. 부탁할게!':': 괜찮아. 다음에 또 들를게.')],()=>{lifeClose();r20Depart();});
+  coreAutoSave();return;
+ }
  if(a==='r20Travel'){void r20Travel(k);return;}
  if(a==='r20Map')return worldRender();
  if(a==='r20Journal')return renderJournal();
