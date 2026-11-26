@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>공방주 키라의 라이프 · R21</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>공방주 키라의 라이프 · R22</title>
 <style>
 /* R12 — all interface artwork is code. No raster UI frames or icons. */
 :root{color-scheme:dark;--ink:#f6f0df;--muted:#b7c4b8;--panel:#172c2beF;--line:#9eb9a448;--gold:#edcf91;--green:#9cceb2;--danger:#df9a87;font-family:"Malgun Gothic",system-ui,sans-serif}
@@ -4808,9 +4808,10 @@ coreRender=function(force){
 
 
 
+
 /* R20 UPDATE BEGIN */
 // Source for the R20 block embedded in index.html. Run build-r20.cjs after editing.
-const R20_SPOTS={bed:{x:4.25,z:-3.0},chair:{x:3.6,z:.6},craft:{x:-4.6,z:-2.6},storage:{x:-4.7,z:2.3}};
+const R20_SPOTS={bed:{x:4.25,z:-3.0},chair:{x:3.6,z:.6},craft:{x:-4.6,z:-2.6},storage:{x:-4.7,z:2.3},mail:{x:1.85,z:4.35}};
 function r20RegisterRooms(){
  for(const [id,spec] of Object.entries(portalSpecs)){
   const data=id==='workshop'?{...spec,w:12,d:10}:spec;
@@ -4836,6 +4837,7 @@ furnishWorkshop=async function(r){
   setProp(r,'lantern',-1.8,-4.7,{height:.55,y:1.5}),
   setProp(r,'lantern',4.5,-4.7,{height:.55,y:1.5})
  ]);
+ r22BuildMailbox(r);
 };
 const r20Distance=p=>Math.hypot(player.x-p.x,player.z-p.z);
 coreAtBed=()=>activeRoom?.id==='workshop'&&r20Distance(R20_SPOTS.bed)<1.65;
@@ -4941,6 +4943,9 @@ function r20Visitors(dt){
     const n=npc[choice.id-1];n.x=entry.x;n.z=entry.z;n.heading=Math.PI;n.speed=1.65;n.steps=route(entry,target,room);
     r20Visit={...choice,entry,phase:'arriving',waitUntil:r20VisitTime()+45,stuck:0};v.serial++;v.nextAt=r20VisitTime()+75;
     v.last[choice.id]=core.day;if(choice.kind==='story')v.last['story:'+life().main]=core.day;
+    if(choice.kind==='story'||choice.kind==='personal')v.questDay=core.day;
+    if(choice.kind==='merchant')v.tradeDay=core.day;
+    coreAutoSave();
    }
   }else v.nextAt=r20VisitTime()+60;
  }
@@ -5020,6 +5025,7 @@ lifeNearby=function(){
   add('r20sleep','잠자기',R20_SPOTS.bed,1.65);add('r20rest','휴식',R20_SPOTS.chair,1.5);
   add('craft','제작',R20_SPOTS.craft,2.1);add('r20storage','창고',R20_SPOTS.storage,1.75);
   add('r20exit','밖으로',{x:0,z:activeRoom.d/2-.45},1.45);
+  add('r22mail','편지함',R20_SPOTS.mail,1.35);
   for(const g of r20Guests){const d=r20Distance(g);if(d<1.7&&r20Visit?.phase==='waiting')options.push({type:'npc',n:g.n,label:'대화',d});}
   return options.sort((a,b)=>a.d-b.d)[0]??null;
  }
@@ -5035,6 +5041,7 @@ lifeInteract=function(o){
  if(o.type==='r20rest')return coreRecover();
  if(o.type==='r20storage')return renderBag('storage');
  if(o.type==='r20exit')return worldRender();
+ if(o.type==='r22mail')return r22RenderMail();
  if(o.type==='r20loot'){if(!battleCollect(ruinActive()))coreToast('가방이 가득 찼습니다.');return;}
  return r20Interact(o);
 };
@@ -5048,7 +5055,7 @@ function r20SyncUI(){
  if(near){lifeButton.textContent=labels[near.type]??near.label;lifeButton.disabled=near.type==='r20rest'&&core.rest>=2;}
  actionBar.hidden=!fighting||blockedUI||!!near;attackKey.hidden=false;dodgeKey.hidden=false;
  attackKey.textContent='공격';dodgeKey.textContent='회피';
- $('kira-menu').hidden=coreBusy||!!transitionTimer;$('kira-menu').disabled=coreBusy||!!transitionTimer;$('kira-menu').textContent='메뉴';
+ $('kira-menu').hidden=coreBusy||!!transitionTimer;$('kira-menu').disabled=coreBusy||!!transitionTimer;if(!$('kira-menu').querySelector('.r22-icon'))$('kira-menu').textContent='메뉴';
  document.body.dataset.r20Combat=fighting?'yes':'no';
  for(const el of [roomButton,lifeTask,worldBtn,r12Cargo,r12TargetLabel,r12Alternate,pickKey,petKey,guardKey,potionKey,shortcutKey,r13SwapKey,...battleSpellKeys])el.hidden=true;
 }
@@ -5153,6 +5160,104 @@ lifeAction=function(a,k){
  if(a==='pet')return battlePetPanel();
  return r20LifeAction(a,k);
 };
+
+// R22: regular contracts come by letter; story/personal visits happen once a day.
+function r22BuildMailbox(room){
+ const g=new T.Group();g.name='편지함';const p=R20_SPOTS.mail;g.position.set(p.x,0,p.z);room.group.add(g);
+ box(g,'#72607e',.16,.8,.16,0,.4,0);box(g,'#584661',.58,.08,.4,0,.04,0);
+ box(g,'#a18bb2',.95,.57,.35,0,1.02,0);box(g,'#d2c7df',1.02,.07,.43,0,1.34,0);
+ box(g,'#45394d',.65,.045,.035,0,1.13,-.194);box(g,'#f0e7ed',.49,.21,.022,.06,1.14,-.219);
+ room.blockers.push({x:p.x,z:p.z,w:1,d:.42,key:'mailbox'});
+}
+function r22MailState(){const f=life().flags;return f.mailbox??(f.mailbox={version:1,day:0,letters:[],tiers:{}});}
+function r22Capability(s=core){
+ const result={alchemy:1,craft:1};
+ for(const i of Object.values(ITEM_DATA))if(i.inp&&recipeAllowed(i,s)){const skill=R13.skillOf(i);result[skill]=Math.max(result[skill]??1,i.t);}
+ return result;
+}
+function r22EnsureMail(){
+ const box=r22MailState();if(box.day===core.day)return box;
+ const tiers=r22Capability(),l=life(),active=new Set(l.orders.map(o=>o.id));
+ const pool=ORDER_DATA.filter(o=>ITEM_DATA[o.item]?.inp&&!active.has(o.id));
+ const ready=pool.filter(o=>recipeAllowed(ITEM_DATA[o.item]));
+ const above=pool.filter(o=>{const i=ITEM_DATA[o.item];return !recipeAllowed(i)&&i.t===(tiers[R13.skillOf(i)]??1)+1;});
+ const rank=(o,kind)=>lifeHash('mail:'+core.day+':'+kind+':'+o.id);
+ const current=ready.sort((a,b)=>{
+  const ia=ITEM_DATA[a.item],ib=ITEM_DATA[b.item];
+  const da=(tiers[R13.skillOf(ia)]??1)-ia.t,db=(tiers[R13.skillOf(ib)]??1)-ib.t;
+  return da-db||rank(a,'current')-rank(b,'current');
+ });
+ const higher=above.sort((a,b)=>rank(a,'higher')-rank(b,'higher'));
+ // A normal day has two achievable and two next-tier letters. Never invent T6.
+ let rows=[];
+ if(higher.length&&current.length){const n=Math.min(2,higher.length,current.length);rows=[...current.slice(0,n).map(o=>({...r13Cond(o),band:'current'})),...higher.slice(0,n).map(o=>({...r13Cond(o),band:'higher'}))];}
+ else if(!higher.length&&Object.values(tiers).every(t=>t>=5))rows=current.slice(0,4).map(o=>({...r13Cond(o),band:'current'}));
+ box.day=core.day;box.tiers=tiers;box.letters=rows.map(o=>({...o,status:'new',mailDay:core.day}));
+ return box;
+}
+function r22RenderMail(){
+ if(activeRoom?.id!=='workshop'||r20Distance(R20_SPOTS.mail)>=1.35||!lifeOpen('mailbox','편지함'))return;
+ const box=r22EnsureMail();
+ const section=(band,title)=>{const rows=box.letters.filter(o=>o.band===band);return rows.length?`<section class="r22-letter-group"><h2>${title}</h2>${rows.map(o=>`<article class="r20-order"><span class="r22-item">${kit(o.item)}</span><div><b>${htmlSafe(ITEM_DATA[o.item].name)} ×${o.n}</b><small>${htmlSafe(o.npc)} · T${ITEM_DATA[o.item].t} · Q${o.q}${htmlSafe(r13Txt(o))} · ${orderReward(o,[{q:o.q,n:o.n}])} G</small></div>${lifeBtn(o.status==='accepted'?'받은 의뢰':'편지 읽기','r22Letter:'+o.id,o.status==='accepted')}</article>`).join('')}</section>`:'';};
+ lifeHTML(`<p class="r22-mail-note">${coreDate().text} · 오늘 온 편지</p>${section('current','지금 만들 수 있는 의뢰')}${section('higher','한 등급 위의 의뢰')}${box.letters.length?'':'<p>오늘은 새 납품의뢰가 없습니다.</p>'}`);
+ coreAutoSave();
+}
+function r22ReadLetter(id){
+ if(lifeView!=='mailbox'&&lifeView!=='letter')return;
+ const o=r22EnsureMail().letters.find(o=>o.id===id);if(!o||o.status==='accepted')return;
+ lifeView='letter';const i=ITEM_DATA[o.item],skill=R13.skillOf(i),level=R13.tierSkill[i.t-1],pay=orderReward(o,[{q:o.q,n:o.n}]);
+ lifeHTML(`<article class="r22-letter"><p>키라에게</p><h2>${htmlSafe(i.name)} ${o.n}개를 부탁합니다.</h2><div class="r22-letter-item">${kit(o.item)}</div><p>품질 ${o.q} 이상${o.trait?' · '+htmlSafe(o.trait)+' 특성':''}<br>보수 ${pay} G · 수락 후 7일</p>${o.band==='higher'?`<p class="r22-challenge">${skill==='craft'?'제작':'연금술'} 숙련 ${level} · T${i.t} 제조법에 도전하는 의뢰</p>`:''}<p>${htmlSafe(o.npc)} 드림</p><div class="life-dialog-footer">${lifeBtn('맡기','r22Accept:'+o.id,life().orders.length>=12)}${lifeBtn('편지함으로','r22Mailbox')}</div></article>`);
+}
+acceptOrder=function(id,name){
+ const o=r22EnsureMail().letters.find(o=>o.id===id&&o.npc===name);
+ if(!o)return false;
+ if(o.status==='accepted'||life().orders.some(x=>x.id===id)||life().orders.length>=12)return false;
+ const {status,band,mailDay,...contract}=o;
+ life().orders.push({...contract,accept:core.day,due:core.day+6});o.status='accepted';return true;
+};
+r20PickVisit=function(){
+ const v=r20VisitState(),main=mainNPC[life().main];
+ if(v.questDay!==core.day){
+  const pending=[];
+  if(main&&(!life().started||mainCheck(life().main)))pending.push({id:main,kind:'story'});
+  for(const n of npc){
+   if(n.id===main)continue;const id=personalID(n.id,personalStage(n.id));
+   if(personalState().active[id]?personalReady(id):personalCanStart(n.id))pending.push({id:n.id,kind:'personal'});
+  }
+  if(pending.length)return pending[core.day%pending.length];
+ }
+ if(v.tradeDay!==core.day){const merchants=npc.filter(n=>stockFor(npcName(n.id)).length);if(merchants.length)return {id:merchants[core.day%merchants.length].id,kind:'merchant'};}
+ return null;
+};
+const r22Action=lifeAction;
+lifeAction=function(a,k){
+ if(a==='r22Mailbox')return r22RenderMail();
+ if(a==='r22Letter')return r22ReadLetter(k);
+ if(a==='r22Accept'){
+  if(lifeView!=='letter')return;const o=r22EnsureMail().letters.find(o=>o.id===k);if(!o)return;
+  if(!acceptOrder(o.id,o.npc)){coreToast('이미 받은 의뢰이거나 목록이 가득 찼습니다.');return;}
+  coreToast('의뢰 목록에 넣었습니다.');lifeView='mailbox';r22RenderMail();lifeClose();coreAutoSave();return;
+ }
+ return r22Action(a,k);
+};
+// One eight-icon atlas. Item artwork continues to use the original item icons.
+const R22_UI_ICONS={menu:0,map:1,mail:2,bag:3,quest:4,equipment:5,status:6,close:7};
+function r22Icon(name){return `<span class="r22-icon r22-icon-${name}" aria-hidden="true"></span>`;}
+r20Menu=function(){
+ if(!lifeOpen('menu','메뉴'))return;
+ const tile=(icon,label,act,disabled=false)=>lifeBtn(label,act,disabled,`class="r22-tile" data-r22-icon="${icon}"`);
+ lifeHTML(`<p class="r20-meta">${coreDate().text} · ${core.gold.toLocaleString('ko-KR')} G</p><div class="r20-menu r22-icon-menu">${tile('bag','가방','bag')}${tile('equipment','장비','equipment')}${tile('quest','의뢰','r20Journal')}${tile('map','세계지도','r20Map',coreCombat())}${tile('status','상태 · 저장','r20Status',coreCombat())}${tile('menu','화면 확대','r20Full')}</div>`);
+ for(const b of lifeContent.querySelectorAll('[data-r22-icon]'))b.insertAdjacentHTML('afterbegin',r22Icon(b.dataset.r22Icon));
+};
+$('kira-menu').onclick=r20Menu;
+$('life-close').onclick=()=>lifeClose();
+const r22Sync=r20SyncUI;
+r20SyncUI=function(){
+ r22Sync();const menu=$('kira-menu');if(!menu.querySelector('.r22-icon'))menu.innerHTML=r22Icon('menu');menu.setAttribute('aria-label','메뉴');menu.title='메뉴';
+ for(const id of ['life-close','kira-close']){const b=$(id);if(b&&!b.querySelector('.r22-icon')){b.innerHTML=r22Icon('close');b.setAttribute('aria-label','닫기');}}
+};
+const r22Snapshot=coreSnapshot;
+coreSnapshot=function(){const p=r22Snapshot();p.contentVersion='R22_MAIL_LAVENDER';return p;};
 
 /* R20 UPDATE END */
 main().catch(error=>{status.textContent='공방을 불러오지 못했습니다.';console.error(error);});

@@ -1,5 +1,5 @@
 // Source for the R20 block embedded in index.html. Run build-r20.cjs after editing.
-const R20_SPOTS={bed:{x:4.25,z:-3.0},chair:{x:3.6,z:.6},craft:{x:-4.6,z:-2.6},storage:{x:-4.7,z:2.3}};
+const R20_SPOTS={bed:{x:4.25,z:-3.0},chair:{x:3.6,z:.6},craft:{x:-4.6,z:-2.6},storage:{x:-4.7,z:2.3},mail:{x:1.85,z:4.35}};
 function r20RegisterRooms(){
  for(const [id,spec] of Object.entries(portalSpecs)){
   const data=id==='workshop'?{...spec,w:12,d:10}:spec;
@@ -25,6 +25,7 @@ furnishWorkshop=async function(r){
   setProp(r,'lantern',-1.8,-4.7,{height:.55,y:1.5}),
   setProp(r,'lantern',4.5,-4.7,{height:.55,y:1.5})
  ]);
+ r22BuildMailbox(r);
 };
 const r20Distance=p=>Math.hypot(player.x-p.x,player.z-p.z);
 coreAtBed=()=>activeRoom?.id==='workshop'&&r20Distance(R20_SPOTS.bed)<1.65;
@@ -130,6 +131,9 @@ function r20Visitors(dt){
     const n=npc[choice.id-1];n.x=entry.x;n.z=entry.z;n.heading=Math.PI;n.speed=1.65;n.steps=route(entry,target,room);
     r20Visit={...choice,entry,phase:'arriving',waitUntil:r20VisitTime()+45,stuck:0};v.serial++;v.nextAt=r20VisitTime()+75;
     v.last[choice.id]=core.day;if(choice.kind==='story')v.last['story:'+life().main]=core.day;
+    if(choice.kind==='story'||choice.kind==='personal')v.questDay=core.day;
+    if(choice.kind==='merchant')v.tradeDay=core.day;
+    coreAutoSave();
    }
   }else v.nextAt=r20VisitTime()+60;
  }
@@ -209,6 +213,7 @@ lifeNearby=function(){
   add('r20sleep','잠자기',R20_SPOTS.bed,1.65);add('r20rest','휴식',R20_SPOTS.chair,1.5);
   add('craft','제작',R20_SPOTS.craft,2.1);add('r20storage','창고',R20_SPOTS.storage,1.75);
   add('r20exit','밖으로',{x:0,z:activeRoom.d/2-.45},1.45);
+  add('r22mail','편지함',R20_SPOTS.mail,1.35);
   for(const g of r20Guests){const d=r20Distance(g);if(d<1.7&&r20Visit?.phase==='waiting')options.push({type:'npc',n:g.n,label:'대화',d});}
   return options.sort((a,b)=>a.d-b.d)[0]??null;
  }
@@ -224,6 +229,7 @@ lifeInteract=function(o){
  if(o.type==='r20rest')return coreRecover();
  if(o.type==='r20storage')return renderBag('storage');
  if(o.type==='r20exit')return worldRender();
+ if(o.type==='r22mail')return r22RenderMail();
  if(o.type==='r20loot'){if(!battleCollect(ruinActive()))coreToast('가방이 가득 찼습니다.');return;}
  return r20Interact(o);
 };
@@ -237,7 +243,7 @@ function r20SyncUI(){
  if(near){lifeButton.textContent=labels[near.type]??near.label;lifeButton.disabled=near.type==='r20rest'&&core.rest>=2;}
  actionBar.hidden=!fighting||blockedUI||!!near;attackKey.hidden=false;dodgeKey.hidden=false;
  attackKey.textContent='공격';dodgeKey.textContent='회피';
- $('kira-menu').hidden=coreBusy||!!transitionTimer;$('kira-menu').disabled=coreBusy||!!transitionTimer;$('kira-menu').textContent='메뉴';
+ $('kira-menu').hidden=coreBusy||!!transitionTimer;$('kira-menu').disabled=coreBusy||!!transitionTimer;if(!$('kira-menu').querySelector('.r22-icon'))$('kira-menu').textContent='메뉴';
  document.body.dataset.r20Combat=fighting?'yes':'no';
  for(const el of [roomButton,lifeTask,worldBtn,r12Cargo,r12TargetLabel,r12Alternate,pickKey,petKey,guardKey,potionKey,shortcutKey,r13SwapKey,...battleSpellKeys])el.hidden=true;
 }

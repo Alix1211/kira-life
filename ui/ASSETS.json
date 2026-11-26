@@ -1,0 +1,23 @@
+{
+  "release": "R22",
+  "method": "Built-in image generation",
+  "character_art_modified": false,
+  "files": [
+    {
+      "file": "lavender-panel.png",
+      "usage": "Panel and dialogue text plate, text rendered separately",
+      "prompt": "Use case: stylized-concept. Asset type: one production-ready 2D fantasy life-RPG UI panel background, portrait 4:3 rectangle. Single isolated panel filling canvas with a small transparent margin. Muted lavender-purple enamel and parchment, restrained pearly silver thin rim, gently rounded corners, very subtle botanical alchemy engraving at corners only. Large perfectly plain soft smoky lavender central writing area, high legibility for dark plum Korean text to be overlaid in code. Sophisticated cozy Atelier-like craftsmanship, delicate but clean, no ornate protrusions, no buttons, no lettering, no words, no characters, no objects, no scene, no mockup, no sprite sheet. Flat front view, symmetric, crisp edges, no perspective. Genuine transparent background around panel."
+    },
+    {
+      "file": "lavender-button.png",
+      "usage": "Shared button background",
+      "prompt": "Use case: stylized-concept. Asset type: a single horizontal rounded pill button background for a polished cozy alchemy life RPG. Isolated one button, width-to-height 3:1, generous transparent margin, flat front view. Muted lavender enamel with pearl silver hairline rim, softly lit lilac center, extremely subtle top sheen, understated tactile finish, clean silhouette. Center blank for readable text or icon rendered separately. No words, no icon, no scene, no other assets, no sprite sheet, no protruding decorations. Genuine transparent outer background."
+    },
+    {
+      "file": "lavender-sheet.png",
+      "usage": "Single CSS sprite atlas, 4 columns by 2 rows; no destructive PNG slicing",
+      "cells": ["menu", "map", "mail", "bag", "quest", "equipment", "status", "close"],
+      "prompt": "Use case: stylized-concept. Produce ONE finished game UI ICON SPRITE SHEET for a lavender fantasy alchemy life RPG. The two reference images are STYLE REFERENCES only: lavender leather, lilac parchment, pearly silver; simplify them for small readable icons. Canvas exactly 2048x1024 if possible, a rigorously regular 4-column by 2-row grid of eight equal SQUARE cells. No cell borders, no labels, no typography, no backdrop, genuine transparent alpha around every separate icon. Every icon centered within its own cell with 20 percent empty margin on all four sides; all eight have matching visual size and weight. Nothing may cross into another cell. Top row left to right: 1 main menu journal with three simple bars; 2 compact folded world map with compass; 3 closed letter envelope and small lavender wax seal (mailbox); 4 soft leather satchel bag. Bottom row left to right: 5 rolled contract with small quill (quests); 6 crossed sword and shield (equipment); 7 round alchemy/star emblem (status); 8 simple clear silver X (close). Polished hand-painted game UI, deep plum outlines, soft muted lavender and ivory highlights, crisp high contrast silhouettes readable at 48px. One sprite sheet only. No glow outside icon silhouettes. Do not make a mockup or a page of labelled samples."
+    }
+  ]
+}
