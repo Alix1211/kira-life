@@ -1,4 +1,18 @@
 // R23: public region entrances, discovered checkpoints, and light ambient encounters.
+function r23LoadUIImages(){
+ const properties={panel:'--r22-panel',button:'--r22-button',sheet:'--r22-sheet','world-map':'--r23-world-map'};
+ for(const [name,property] of Object.entries(properties)){
+  const el=$('kira-ui-'+name);if(!el||el.dataset.loaded)continue;
+  try{
+   const raw=atob(el.textContent.trim()),bytes=new Uint8Array(raw.length);
+   for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+   const url=URL.createObjectURL(new Blob([bytes],{type:'image/png'}));
+   document.documentElement.style.setProperty(property,`url("${url}")`);
+   el.dataset.loaded='1';el.textContent='';
+  }catch(error){console.error('UI image load failed',name,error);}
+ }
+}
+r23LoadUIImages();
 const R23_REGIONS=R20_REGIONS.map((r,i)=>({...r,root:r.areas[0][0],point:[[52,49],[39,24],[28,49],[43,74],[15,23],[18,79],[80,44],[73,77]][i]}));
 const R23_AREA_IDS=new Set(R23_REGIONS.flatMap(r=>r.areas.map(a=>a[0])));
 const R23_ENTRANCES=new Set(R23_REGIONS.map(r=>r.root));
@@ -118,7 +132,7 @@ r20SyncUI=function(){
  if(ruinSword)ruinSword.visible=!!ruinActive()&&!lifeAnimation&&!coreBusy;
 };
 const r23Snapshot=coreSnapshot;
-coreSnapshot=function(){r23RecordArrival();const p=r23Snapshot();p.contentVersion='R23_1_FIELD_NAV';return p;};
+coreSnapshot=function(){r23RecordArrival();const p=r23Snapshot();p.contentVersion='R23_2_UI_ART';return p;};
 const r23Validate=validateLife;
 validateLife=function(s){
  r23Validate(s);const t=s.life?.flags?.travel;
