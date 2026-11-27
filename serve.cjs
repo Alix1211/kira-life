@@ -3,7 +3,7 @@ const root=__dirname;
 http.createServer((req,res)=>{
  let name;try{name=decodeURIComponent(new URL(req.url,'http://localhost').pathname);}catch{res.writeHead(400).end();return;}
  if(name==='/')name='/index.html';
- if(!['/index.html','/simple-ui.css'].includes(name)&&!/^\/assets\/\d+\.bin$/.test(name)&&!/^\/ui\/lavender-(panel|button|sheet)\.png$/.test(name)){res.writeHead(404).end();return;}
+ if(!['/index.html','/simple-ui.css'].includes(name)&&!/^\/assets\/\d+\.bin$/.test(name)&&!/^\/ui\/lavender-(panel|button|sheet|world-map)\.png$/.test(name)){res.writeHead(404).end();return;}
  const target=path.join(root,name);fs.stat(target,(err,stat)=>{
   if(err||!stat.isFile()){res.writeHead(404).end();return;}
   res.writeHead(200,{'Content-Type':name.endsWith('.html')?'text/html; charset=utf-8':name.endsWith('.css')?'text/css; charset=utf-8':name.endsWith('.png')?'image/png':'application/octet-stream','Content-Length':stat.size,'Cache-Control':'no-cache'});

@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>공방주 키라의 라이프 · R22</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>공방주 키라의 라이프 · R23</title>
 <style>
 /* R12 — all interface artwork is code. No raster UI frames or icons. */
 :root{color-scheme:dark;--ink:#f6f0df;--muted:#b7c4b8;--panel:#172c2beF;--line:#9eb9a448;--gold:#edcf91;--green:#9cceb2;--danger:#df9a87;font-family:"Malgun Gothic",system-ui,sans-serif}
@@ -3691,7 +3691,7 @@ function battleDaily(){const b=battleState();for(const [id,r] of Object.entries(
 async function battleInitClips(){if(battleInit)return battleInit;battleInit=(async()=>{const [m,r,a,g,v,sword]=await Promise.all([load('d-melee'),load('combat-ranged'),load('d-dodge'),load('general'),load('move'),model('prop-sword')]);battleClips=Object.fromEntries([...m.animations,...r.animations,...a.animations,...g.animations,...v.animations].map(c=>[c.name,c]));const c=battleClips;heroClips??={cut0:c.Melee_1H_Attack_Slice_Diagonal,cut1:c.Melee_1H_Attack_Slice_Horizontal,cut2:c.Melee_1H_Attack_Chop,roll:c.Dodge_Forward,fall:c.Death_A,hit:c.Hit_A};if(!ruinSword){const weapon=sword.clone(true),d=dimensions(weapon);weapon.scale.setScalar(.93/d.size.length());weapon.position.set(0,-.012,0);const hand=playerRig.skin.getObjectByName('handslotr')??playerRig.skin.getObjectByName('handr');ruinSword=new T.Group();ruinSword.rotation.set(Math.PI/2,0,Math.PI/2);ruinSword.visible=false;ruinSword.add(weapon);hand.add(ruinSword);}return c;})().catch(e=>{battleInit=null;throw e;});return battleInit;}
 function battlePoints(f){const room=deepById.get(f.id)?.rooms??[];const used=[];const points=[...f.navigation.values()].filter(p=>!blocked(p.x,p.z,.42,f)&&!(trailLinks[f.id]??[]).some(l=>Math.hypot(p.x-l.x,p.z-l.z)<5));const spaces=room.filter(([a,b,c,d])=>b-a>=3&&d-c>=3).slice(1);for(const [a,b,c,d] of spaces){const cx=a+b,cz=c+d;for(const dx of [-1.65,1.65]){const p=points.filter(p=>!used.some(u=>Math.hypot(u.x-p.x,u.z-p.z)<2.5)).sort((p,q)=>Math.hypot(p.x-cx-dx,p.z-cz)-Math.hypot(q.x-cx-dx,q.z-cz))[0];if(p)used.push(p);}}return used.slice(0,12);}
 async function battleActor(cid,p,f,key){const d=BATTLE_DATA[cid],m=await load(battleModel[cid]),skin=m.scene,c=battleClips,isBone=battleSkeleton.has(cid),list=Object.fromEntries(m.animations.map(a=>[a.name,a]));const get=(...names)=>names.map(n=>list[n]).find(Boolean)??m.animations[0];const motions=isBone?{idle:c.Idle_A,walk:c.Walking_A,strike:cid==='C06'?c.Ranged_Magic_Shoot:c.Melee_1H_Attack_Slice_Horizontal,fall:c.Death_A,hit:c.Hit_A}:{idle:get('Idle','Flying_Idle'),walk:get('Walk','Fast_Flying','Run'),strike:get('Bite_Front','Punch','Headbutt'),fall:get('Death'),hit:get('HitReact','HitRecieve')};const large=d.rank==='boss',size=large?2.35:isBone?1.44:d.model.startsWith('Big')?1.64:1.23;const g=new T.Group(),a=dimensions(skin);g.add(skin);g.scale.setScalar(size/Math.max(.01,a.size.y));skin.position.sub(new T.Vector3(a.center.x,a.box.min.y,a.center.z));const range=['C06','C08','C18'].includes(cid)?4.5:large?2.5:1.8;const e=makeActor({cid,key,kind:range>4?'mushroom':'normal',type:{...d,def:d.df,size,range,wind:large?1.05:.78,speed:large?1.5:2.1},hp:d.hp,x:p.x,z:p.z,home:{x:p.x,z:p.z},heading:0,steps:[],speed:large?1.5:2.1,nextHit:.65,mode:'free',clock:0},{group:g,skin},motions);e.motions=motions;if(isBone){const hand=skin.getObjectByName('handslotr')??skin.getObjectByName('handr');if(hand){const w=(await model('prop-sword')).clone(true),q=dimensions(w);w.scale.setScalar(.8/q.size.length());w.rotation.set(Math.PI/2,0,Math.PI/2);hand.add(w);}}const warn=new T.Mesh(new T.RingGeometry(.87,1,38),new T.MeshBasicMaterial({color:'#f69759',side:T.DoubleSide,transparent:true,opacity:.64,depthWrite:false}));warn.rotation.x=-Math.PI/2;warn.visible=false;e.warning=warn;g.name=d.name;f.group.add(g,warn);display(e);return e;}
-async function battlePrepare(f){if(!f||f.battleReady)return;if(f.id==='dungeon'){await battleInitClips();for(const [i,e] of f.enemies.entries()){e.cid=battleOld[e.kind];e.key=String(i);}f.battleReady=true;battleRestoreField(f);return;}const ids=battleFloors[f.id];if(!ids){f.battleReady=true;return;}if(f.battlePreparing)return f.battlePreparing;f.battlePreparing=(async()=>{await battleInitClips();const pts=battlePoints(f),normal=ids.filter(id=>BATTLE_DATA[id].rank==='normal'),boss=ids.find(id=>BATTLE_DATA[id].rank==='boss');const count=Math.min(pts.length-(boss?1:0),12),enemies=[];let ki=0;for(let i=0;i<count&&enemies.length<60;i++){const size=4+Math.floor(lifeHash(f.id+':pk'+i)*3);for(let j=0;j<size&&enemies.length<60;j++){const ang=j/size*6.283+lifeHash(f.id+i)*6,off=j?1.15:0;let q={x:pts[i].x+Math.cos(ang)*off,z:pts[i].z+Math.sin(ang)*off};if(blocked(q.x,q.z,.42,f))q={x:pts[i].x,z:pts[i].z};enemies.push(await battleActor(normal[(i+j)%normal.length],q,f,String(ki++)));}}if(boss&&pts.length>count)enemies.push(await battleActor(boss,pts.at(-1),f,'boss'));f.enemies=enemies;f.battleReady=true;battleRestoreField(f);})().catch(e=>{f.battlePreparing=null;throw e;});return f.battlePreparing;}
+async function battlePrepare(f){if(!f||f.battleReady)return;if(f.id==='dungeon'){await battleInitClips();for(const [i,e] of f.enemies.entries()){e.cid=battleOld[e.kind];e.key=String(i);}f.battleReady=true;battleRestoreField(f);return;}const ids=battleFloors[f.id];if(!ids||(typeof R23_AMBIENT!=='undefined'&&R23_AMBIENT[f.id])){f.battleReady=true;return;}if(f.battlePreparing)return f.battlePreparing;f.battlePreparing=(async()=>{await battleInitClips();const pts=battlePoints(f),normal=ids.filter(id=>BATTLE_DATA[id].rank==='normal'),boss=ids.find(id=>BATTLE_DATA[id].rank==='boss');const count=Math.min(pts.length-(boss?1:0),12),enemies=[];let ki=0;for(let i=0;i<count&&enemies.length<60;i++){const size=4+Math.floor(lifeHash(f.id+':pk'+i)*3);for(let j=0;j<size&&enemies.length<60;j++){const ang=j/size*6.283+lifeHash(f.id+i)*6,off=j?1.15:0;let q={x:pts[i].x+Math.cos(ang)*off,z:pts[i].z+Math.sin(ang)*off};if(blocked(q.x,q.z,.42,f))q={x:pts[i].x,z:pts[i].z};enemies.push(await battleActor(normal[(i+j)%normal.length],q,f,String(ki++)));}}if(boss&&pts.length>count)enemies.push(await battleActor(boss,pts.at(-1),f,'boss'));f.enemies=enemies;f.battleReady=true;battleRestoreField(f);})().catch(e=>{f.battlePreparing=null;throw e;});return f.battlePreparing;}
 // Small shared sprite effects: no dynamic lights or shader light count changes.
 let battleTexture=null;const battlePool=[];
 function battleGetFX(color,size){let o=battlePool.find(o=>!o.visible);if(!o){if(battlePool.length>=24)return null;if(!battleTexture){const c=document.createElement('canvas');c.width=c.height=64;const ctx=c.getContext('2d'),g=ctx.createRadialGradient(32,32,0,32,32,31);g.addColorStop(0,'#ffffff');g.addColorStop(.22,'#ffffffd9');g.addColorStop(.5,'#ffffff55');g.addColorStop(1,'#ffffff00');ctx.fillStyle=g;ctx.fillRect(0,0,64,64);battleTexture=new T.CanvasTexture(c);}o=new T.Sprite(new T.SpriteMaterial({map:battleTexture,color,transparent:true,depthWrite:false,blending:T.AdditiveBlending}));o.visible=false;scene.add(o);battlePool.push(o);}o.material.color.set(color);o.material.opacity=1;o.scale.set(size,size,1);o.visible=true;return o;}
@@ -4809,6 +4809,8 @@ coreRender=function(force){
 
 
 
+
+
 /* R20 UPDATE BEGIN */
 // Source for the R20 block embedded in index.html. Run build-r20.cjs after editing.
 const R20_SPOTS={bed:{x:4.25,z:-3.0},chair:{x:3.6,z:.6},craft:{x:-4.6,z:-2.6},storage:{x:-4.7,z:2.3},mail:{x:1.85,z:4.35}};
@@ -5258,6 +5260,125 @@ r20SyncUI=function(){
 };
 const r22Snapshot=coreSnapshot;
 coreSnapshot=function(){const p=r22Snapshot();p.contentVersion='R22_MAIL_LAVENDER';return p;};
+
+// R23: public region entrances, discovered checkpoints, and light ambient encounters.
+const R23_REGIONS=R20_REGIONS.map((r,i)=>({...r,root:r.areas[0][0],point:[[52,49],[39,24],[28,49],[43,74],[15,23],[18,79],[80,44],[73,77]][i]}));
+const R23_AREA_IDS=new Set(R23_REGIONS.flatMap(r=>r.areas.map(a=>a[0])));
+const R23_ENTRANCES=new Set(R23_REGIONS.map(r=>r.root));
+function r23TravelState(s=core){
+ const flags=life(s).flags,t=flags.travel??(flags.travel={version:1,seen:{workshop:true}});
+ // Import only evidence of actual presence, never story unlocks or a region flag.
+ for(const id of s.visited??[])if(typeof id==='string'&&R23_AREA_IDS.has(id))t.seen[id]=true;
+ for(const e of flags.personal?.actions??[])if(e.kind==='visit'&&R23_AREA_IDS.has(e.area))t.seen[e.area]=true;
+ for(const key of Object.keys(life(s).nodes??{})){const a=key.split(':'),id=a[0]==='r12'?a[1]:a[0];if(R23_AREA_IDS.has(id))t.seen[id]=true;}
+ return t;
+}
+function r23RecordArrival(){const id=areaID();if(R23_AREA_IDS.has(id))r23TravelState().seen[id]=true;}
+function r23CanTravel(id,s=core){return R23_ENTRANCES.has(id)||R23_AREA_IDS.has(id)&&r23TravelState(s).seen[id]===true;}
+const r23Place=corePlace;
+corePlace=async function(loc){await r23Place(loc);r23RecordArrival();};
+const r23Restore=coreRestore;
+coreRestore=async function(p){await r23Restore(p);r23RecordArrival();};
+const r23Switch=switchField;
+switchField=async function(link){const from=areaID();await r23Switch(link);if(areaID()!==from)r23RecordArrival();};
+const r23TravelBase=r20Travel;
+r20Travel=async function(id){
+ if(!r23CanTravel(id)){coreToast('입구에서 직접 탐험해 도착한 뒤 빠른 이동할 수 있습니다.');return;}
+ await r23TravelBase(id);
+};
+let r23Selected='workshop';
+worldRender=function(selected){
+ if(!lifeOpen('worldmap','세계지도'))return;
+ const current=R23_REGIONS.find(r=>r.areas.some(a=>a[0]===areaID()))??R23_REGIONS[0];
+ const region=R23_REGIONS.find(r=>r.root===selected)??current;r23Selected=region.root;
+ const seen=r23TravelState().seen,checkpoints=region.areas.filter(([id])=>id!==region.root&&seen[id]);
+ const nodes=R23_REGIONS.map(r=>`<button class="r23-map-node ${r.root===region.root?'selected':''} ${r.root===current.root?'current':''}" style="left:${r.point[0]}%;top:${r.point[1]}%" data-act="r23Region:${r.root}" aria-label="${htmlSafe(r.name)}" aria-pressed="${r.root===region.root}"><span class="r23-node-ring"></span><b>${htmlSafe(r.name)}</b></button>`).join('');
+ const fast=checkpoints.length?`<section class="r23-checkpoints"><h3>방문한 곳</h3><select id="r23-checkpoint" aria-label="빠른 이동 지점">${checkpoints.map(([id,name])=>`<option value="${id}">${htmlSafe(name)}</option>`).join('')}</select>${lifeBtn('빠른 이동','r23Fast')}</section>`:'';
+ lifeHTML(`<div class="r23-world"><div class="r23-map" role="group" aria-label="지역과 길이 그려진 세계지도">${nodes}</div><aside class="r23-map-details"><h2>${htmlSafe(region.name)}</h2><p>${htmlSafe(region.desc)}</p>${lifeBtn(region.root==='workshop'?'공방으로':'입구로 이동','r20Travel:'+region.root)}${fast}<p class="r23-map-note">안쪽 지역은 직접 거쳐서 탐험합니다.<br>도착한 곳만 빠른 이동에 등록됩니다.</p></aside></div>`);
+};
+const r23Action=lifeAction;
+lifeAction=function(a,k){
+ if(a==='r23Region')return worldRender(k);
+ if(a==='r23Fast'){const id=$('r23-checkpoint')?.value;if(id&&r23CanTravel(id))return r20Travel(id);return;}
+ return r23Action(a,k);
+};
+
+// Counts are for a whole field, not per room or per resource cluster.
+const R23_AMBIENT={
+ outer:{count:3,cid:'C01',hp:40,atk:7,def:4},
+ hunt:{count:4,cid:'C02',hp:45,atk:8,def:5},
+ shadePath:{count:3,cid:'C05',hp:55,atk:10,def:6},
+ shadeHunt:{count:4,cid:'C04',hp:65,atk:12,def:8},
+ shadeDepth:{count:3,cid:'C05',hp:65,atk:12,def:8},
+ river:{count:2,cid:'C01',hp:35,atk:6,def:3},
+ lake:{count:2,cid:'C05',hp:50,atk:9,def:5},
+ g01:{count:3,cid:'C03',hp:45,atk:9,def:6},
+ g02:{count:3,cid:'C05',hp:60,atk:11,def:7},
+ g03:{count:3,cid:'C07',hp:80,atk:14,def:10}
+};
+for(const [id,c] of Object.entries(R23_AMBIENT))battleFloors[id]=[c.cid];
+const r23Prepare=battlePrepare;
+battlePrepare=async function(f){
+ await r23Prepare(f);const c=R23_AMBIENT[f.id];if(!c||f.r23AmbientReady)return;
+ await battleInitClips();
+ const links=trailLinks[f.id]??[],safe=links.map(spawnFromLink);
+ const points=[...f.navigation.values()].filter(p=>!blocked(p.x,p.z,.45,f)&&safe.every(q=>Math.hypot(p.x-q.x,p.z-q.z)>7)&&links.every(q=>Math.hypot(p.x-q.x,p.z-q.z)>7)&&(f.lifeNodes??[]).every(n=>Math.hypot(p.x-n.x,p.z-n.z)>1.7)).sort((a,b)=>lifeHash(f.id+':ambient:'+a.x+':'+a.z)-lifeHash(f.id+':ambient:'+b.x+':'+b.z));
+ const chosen=[];f.enemies??=[];
+ for(const p of points){
+  if(chosen.some(q=>Math.hypot(p.x-q.x,p.z-q.z)<10))continue;
+  // Use the original actor constructor so minor field mobs do not roll elite affixes.
+  const e=await r13BA(c.cid,p,f,String(chosen.length));
+  e.type={...e.type,hp:c.hp,atk:c.atk,def:c.def,range:1.35,wind:.85,speed:1.65};e.hp=c.hp;e.speed=1.65;e.r23Ambient=true;e.r23Aggro=false;e.r23Patrol=5+chosen.length*2;
+  f.enemies.push(e);chosen.push(p);if(chosen.length>=c.count)break;
+ }
+ f.r23AmbientReady=true;battleRestoreField(f);
+};
+const r23EnemyTurn=ruinEnemyTurn;
+ruinEnemyTurn=function(f,e,dt,slots){
+ if(!e.r23Ambient||e.hp<=0||e.mode==='dead')return r23EnemyTurn(f,e,dt,slots);
+ const d=distanceFromHero(e),fromHome=Math.hypot(player.x-e.home.x,player.z-e.home.z);
+ if(e.r23Aggro&&(d>9||fromHome>8)){
+  e.r23Aggro=false;e.mode='free';e.warning.visible=false;e.steps=route(e,e.home,f);e.r23Returning=true;
+ }
+ if(!e.r23Aggro&&!e.r23Returning&&d<4.5&&direct(e,player,.1,f)&&!f.enemies.some(a=>a!==e&&a.r23Aggro&&a.hp>0))e.r23Aggro=true;
+ if(e.r23Aggro)return r23EnemyTurn(f,e,dt,Math.min(1,slots));
+ if(e.mode==='stagger'){e.clock-=dt;e.mixer.update(dt);if(e.clock<=0)e.mode='free';return;}
+ e.r23Patrol-=dt;
+ if(!e.steps.length){
+  if(e.r23Returning){e.r23Returning=false;e.r23Patrol=5;}
+  if(e.r23Patrol<=0){const angle=lifeHash(f.id+e.key+':'+Math.floor(battleClock/10))*Math.PI*2,p={x:e.home.x+Math.cos(angle)*1.2,z:e.home.z+Math.sin(angle)*1.2};if(!blocked(p.x,p.z,.3,f))e.steps=route(e,p,f);e.r23Patrol=8+lifeHash(e.key)*5;}
+ }
+ const moving=moveActor(e,dt);display(e);animateActor(e,moving,dt);
+};
+const r23Hit=hitRuinEnemy;
+hitRuinEnemy=function(e,amount){r23Hit(e,amount);if(e.r23Ambient&&e.hp>0){e.r23Aggro=true;e.r23Returning=false;}};
+const r23ResetEnemy=battleResetEnemy;
+battleResetEnemy=function(e,hp){r23ResetEnemy(e,hp);if(e.r23Ambient){e.r23Aggro=false;e.r23Returning=false;e.r23Patrol=5;}};
+const r23Display=display;
+display=function(a){r23Display(a);if(a.r23Ambient&&activeField)a.group.position.y=areaHeight(a.x,a.z);};
+const r23Warn=ruinWarn;
+ruinWarn=function(e){r23Warn(e);if(e.r23Ambient)e.warning.position.y=areaHeight(e.x,e.z)+.052;};
+const r23Flash=battleFlash;
+battleFlash=function(x,z,y,...rest){return r23Flash(x,z,y+(activeField?.r23AmbientReady?areaHeight(x,z):0),...rest);};
+const r23Entry=ruinEntry;
+ruinEntry=function(from,to){
+ r23Entry(from,to);battleResetTransient();
+ Object.assign(ruinCombat,{move:null,target:null,queued:false,chain:0,chainTime:0,hurt:0});
+ if(ruinSword)ruinSword.visible=!!ruinActive();
+};
+const r23Sync=r20SyncUI;
+r20SyncUI=function(){
+ r23Sync();
+ if(activeField?.r23AmbientReady){const fight=coreCombat();document.body.dataset.r20Combat=fight?'yes':'no';if(!fight)actionBar.hidden=true;}
+ if(ruinSword)ruinSword.visible=!!ruinActive()&&!lifeAnimation&&!coreBusy;
+};
+const r23Snapshot=coreSnapshot;
+coreSnapshot=function(){r23RecordArrival();const p=r23Snapshot();p.contentVersion='R23_DISCOVERY_MAP';return p;};
+const r23Validate=validateLife;
+validateLife=function(s){
+ r23Validate(s);const t=s.life?.flags?.travel;
+ if(t&&(t.version!==1||!t.seen||Object.entries(t.seen).some(([id,v])=>!R23_AREA_IDS.has(id)||v!==true)))throw Error('탐험 기록이 올바르지 않습니다.');
+};
 
 /* R20 UPDATE END */
 main().catch(error=>{status.textContent='공방을 불러오지 못했습니다.';console.error(error);});
