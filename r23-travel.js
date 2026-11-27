@@ -31,7 +31,9 @@ worldRender=function(selected){
  const seen=r23TravelState().seen,checkpoints=region.areas.filter(([id])=>id!==region.root&&seen[id]);
  const nodes=R23_REGIONS.map(r=>`<button class="r23-map-node ${r.root===region.root?'selected':''} ${r.root===current.root?'current':''}" style="left:${r.point[0]}%;top:${r.point[1]}%" data-act="r23Region:${r.root}" aria-label="${htmlSafe(r.name)}" aria-pressed="${r.root===region.root}"><span class="r23-node-ring"></span><b>${htmlSafe(r.name)}</b></button>`).join('');
  const fast=checkpoints.length?`<section class="r23-checkpoints"><h3>방문한 곳</h3><select id="r23-checkpoint" aria-label="빠른 이동 지점">${checkpoints.map(([id,name])=>`<option value="${id}">${htmlSafe(name)}</option>`).join('')}</select>${lifeBtn('빠른 이동','r23Fast')}</section>`:'';
- lifeHTML(`<div class="r23-world"><div class="r23-map" role="group" aria-label="지역과 길이 그려진 세계지도">${nodes}</div><aside class="r23-map-details"><h2>${htmlSafe(region.name)}</h2><p>${htmlSafe(region.desc)}</p>${lifeBtn(region.root==='workshop'?'공방으로':'입구로 이동','r20Travel:'+region.root)}${fast}<p class="r23-map-note">안쪽 지역은 직접 거쳐서 탐험합니다.<br>도착한 곳만 빠른 이동에 등록됩니다.</p></aside></div>`);
+ const enter=region.root==='workshop'?'':lifeBtn('입구로 이동','r20Travel:'+region.root);
+ const home=areaID()==='workshop'?'':lifeBtn('공방으로 돌아가기','r20Travel:workshop',false,'class="r23-return"');
+ lifeHTML(`<div class="r23-world"><div class="r23-map" role="group" aria-label="지역과 길이 그려진 세계지도">${nodes}</div><aside class="r23-map-details"><h2>${htmlSafe(region.name)}</h2><p>${htmlSafe(region.desc)}</p>${enter}${fast}${home}<p class="r23-map-note">안쪽 지역은 직접 거쳐서 탐험합니다.<br>도착한 곳만 빠른 이동에 등록됩니다.</p></aside></div>`);
 };
 const r23Action=lifeAction;
 lifeAction=function(a,k){
@@ -104,13 +106,19 @@ ruinEntry=function(from,to){
  if(ruinSword)ruinSword.visible=!!ruinActive();
 };
 const r23Sync=r20SyncUI;
+const r23FieldMap=document.createElement('button');
+r23FieldMap.id='r23-field-map';r23FieldMap.hidden=true;r23FieldMap.innerHTML=r22Icon('map');
+r23FieldMap.setAttribute('aria-label','세계지도');r23FieldMap.title='세계지도';
+r23FieldMap.onclick=()=>worldRender();document.body.append(r23FieldMap);
 r20SyncUI=function(){
  r23Sync();
+ r23FieldMap.hidden=!ready||!activeField||coreModal||coreBusy||!!transitionTimer||!!lifeAnimation;
+ r23FieldMap.disabled=coreCombat();r23FieldMap.title=r23FieldMap.disabled?'전투가 끝나면 세계지도를 열 수 있습니다.':'세계지도';
  if(activeField?.r23AmbientReady){const fight=coreCombat();document.body.dataset.r20Combat=fight?'yes':'no';if(!fight)actionBar.hidden=true;}
  if(ruinSword)ruinSword.visible=!!ruinActive()&&!lifeAnimation&&!coreBusy;
 };
 const r23Snapshot=coreSnapshot;
-coreSnapshot=function(){r23RecordArrival();const p=r23Snapshot();p.contentVersion='R23_DISCOVERY_MAP';return p;};
+coreSnapshot=function(){r23RecordArrival();const p=r23Snapshot();p.contentVersion='R23_1_FIELD_NAV';return p;};
 const r23Validate=validateLife;
 validateLife=function(s){
  r23Validate(s);const t=s.life?.flags?.travel;
